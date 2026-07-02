@@ -16,15 +16,172 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #111214; }
         ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        /* Sidebar Ana Kapsayıcı */
+.left-bots-sidebar {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 10, 12, 0.45); /* Saydam koyu arka plan */
+    backdrop-filter: blur(14px); /* Arka planı bulandırma */
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 40px;
+    padding: 24px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    transition: all 0.4s ease;
+}
+
+/* Çizgisel Bölücüler */
+.sidebar-divider {
+    width: 20px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Her Bir Bot İkon Alanı */
+.bot-item {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* İkonların Kendisi */
+.bot-icon {
+    width: 22px;
+    height: 22px;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+/* Arka Plandaki Neon Parlama Overlay'i */
+.bot-glow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%); /* x7 kırmızısı */
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Hover (Üzerine Gelme) Durumları */
+.bot-item:hover {
+    color: #ffffff;
+}
+
+.bot-item:hover .bot-icon {
+    transform: scale(1.15);
+}
+
+.bot-item:hover .bot-glow-overlay {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Tooltip (Bot İsimleri) */
+.bot-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-10px);
+    background: rgba(15, 15, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(239, 68, 68, 0.3); /* Neon kırmızı çerçeve */
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bot-item:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
     </style>
 </head>
-<body class="text-white font-sans min-h-screen p-4 md:p-10">
+<body class="text-white font-sans min-h-screen p-4 md:p-10 bg-[#060608]">
 
-    <a href="https://discord.gg/x7Crew" target="_blank" 
-       class="fixed top-6 left-6 z-50 glass px-5 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-2 hover:scale-105 hover:bg-emerald-500/10 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-        <i class="fab fa-discord text-xl"></i>
-        Discord Giriş
-    </a>
+    <!-- ANA MENÜ (NAVBAR) - AKILLI SÜRÜM -->
+    <nav id="navbar" class="fixed top-6 left-4 right-4 md:left-10 md:right-10 z-50 flex items-center justify-between backdrop-blur-md bg-[#0a0a0c]/45 px-6 py-4 rounded-2xl border border-white/5 shadow-[0_15px_50px_rgba(0,0,0,0.6)] transition-all duration-500 ease-in-out">
+        
+        <!-- Sol Taraf: Logo & Marka -->
+        <a href="index.html" class="flex items-center gap-3 hover:scale-102 transition-all">
+            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">
+                x7CREW <span class="text-white/50 font-light text-sm ml-1">HOME</span>
+            </span>
+        </a>
+
+        <!-- Orta Kısım: Menü Linkleri -->
+        <div class="hidden md:flex items-center gap-8 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
+            <a href="index.html" class="text-sm font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
+                <i class="fas fa-home mr-1.5"></i> Ana Sayfa
+            </a>
+            <a href="bots.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-robot mr-1.5"></i> Botlarımız
+            </a>
+            <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-life-ring mr-1.5"></i> Destek Hattı
+            </a>
+        </div>
+
+        <!-- Sağ Taraf: Discord Giriş Butonu -->
+        <a href="https://discord.gg/x7Crew" target="_blank" 
+           class="px-5 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-2 hover:scale-105 hover:bg-emerald-500/10 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-emerald-500/5">
+            <i class="fab fa-discord text-xl"></i>
+            Discord Giriş
+        </a>
+    </nav>
+
+    <!-- SİTENİN MEVCUT DİĞER İÇERİKLERİ (KARTLAR, YAZILAR VS.) BURADAN İTİBAREN DEVAM ETSİN -->
+
+
+
+    <!-- 
+      DİKKAT KANKA: Aşağıdaki JavaScript kodunu index.html dosyanın 
+      en altındaki </body> kapatma etiketinin hemen üzerine eklemeyi unutma!
+    -->
+    <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 50) {
+                navbar.style.transform = 'translateY(-150%)';
+                navbar.style.opacity = '0';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.opacity = '1';
+            }
+            lastScrollY = window.scrollY;
+        });
+    </script>
+    
+
 
     <div id="sidebar" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 glass border border-white/10 rounded-full py-6 px-3 flex-col items-center gap-6 hidden md:flex">
         <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500/20 transition-all">
