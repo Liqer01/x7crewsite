@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClosyDEV | Botlarımız</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Sitenin özel glass efekti arkaplanı */
+        .custom-glass {
+            background: rgba(10, 10, 12, 0.45);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        /* Bot Kartları İçin Modern Efektler */
+        .bot-card {
+            background: rgba(15, 15, 20, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bot-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(52, 211, 153, 0.3);
+            box-shadow: 0 20px 40px rgba(52, 211, 153, 0.05);
+        }
+    </style>
+</head>
+<body class="text-white font-sans min-h-screen bg-[#060608] p-4 md:p-10">
+
+    <nav id="navbar" class="fixed top-6 left-4 right-4 md:left-10 md:right-10 z-50 flex items-center justify-between custom-glass px-6 py-4 rounded-2xl border border-white/5 shadow-[0_15px_50px_rgba(0,0,0,0.6)] transition-all duration-500 ease-in-out">
+        
+        <a href="index.html" class="flex items-center gap-3 hover:scale-102 transition-all">
+            <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">
+                ClosyDEV <span class="text-white/50 font-light text-sm ml-1">BOTS</span>
+            </span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
+            <a href="index.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-home mr-1.5"></i> Ana Sayfa
+            </a>
+            <a href="bots.html" class="text-sm font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
+                <i class="fas fa-robot mr-1.5"></i> Botlarımız
+            </a>
+            <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-life-ring mr-1.5"></i> Destek Hattı
+            </a>
+        </div>
+
+        <a href="https://discord.gg/x7Crew" target="_blank" 
+           class="px-5 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-2 hover:scale-105 hover:bg-emerald-500/10 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-emerald-500/5">
+            <i class="fab fa-discord text-xl"></i>
+            Discord Giriş
+        </a>
+    </nav>
+
+    <div class="pt-32 max-w-7xl mx-auto">
+        
+        <div class="text-center mb-16 mt-6">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">
+                Premium <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.2)]">Discord Altyapıları</span>
+            </h1>
+            <p class="text-white/60 text-base md:text-lg max-w-2xl mx-auto">
+                Sunucunu ClosyDEV güvencesiyle uçuşa geçir. Tamamen optimize, hatasız ve modüler satışta olan bot projelerimiz.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+            
+            <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 text-2xl mb-5 shadow-[0_0_20px_rgba(239,68,68,0.15)]">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-between">
+                        Guard Bot 
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg border border-red-500/20">Gelişmiş</span>
+                    </h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">
+                        Sağ tık korumaları, rol/kanal/güvenli yan hesap kilidi ve webhook denetleyicisi. Sunucunu tüm saldırılardan 7/24 korur.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-black text-emerald-400">₺500</span>
+                        <span class="text-white/40 text-xs">/ Aylık</span>
+                    </div>
+                    <a href="https://discord.gg/x7Crew" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 font-bold text-center rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+                        <i class="fas fa-shopping-cart"></i> Satın Al
+                    </a>
+                </div>
+            </div>
+
+            <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-5 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-between">
+                        Eğlence Botu 
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-purple-500/10 text-purple-400 rounded-lg border border-purple-500/20">Aktiflik</span>
+                    </h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">
+                        Gelişmiş ekonomi (economy) sistemi, kelime türetmece, xp/seviye sistemi ve global rütbe sıralaması ile üye etkileşimini artırır.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-black text-emerald-400">₺150</span>
+                        <span class="text-white/40 text-xs">/ Aylık</span>
+                    </div>
+                    <a href="https://discord.gg/x7Crew" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 font-bold text-center rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+                        <i class="fas fa-shopping-cart"></i> Satın Al
+                    </a>
+                </div>
+            </div>
+
+            <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-5 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-between">
+                        Secret Bot 
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg border border-amber-500/20">Özel</span>
+                    </h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">
+                        Kriptolu log tutma, anonim itiraf kanalları ve sadece belirlenen yetkililerin görebileceği gizli yönetim odası mekanizmaları.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-black text-emerald-400">₺200</span>
+                        <span class="text-white/40 text-xs">/ Aylık</span>
+                    </div>
+                    <a href="https://discord.gg/x7Crew" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 font-bold text-center rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+                        <i class="fas fa-shopping-cart"></i> Satın Al
+                    </a>
+                </div>
+            </div>
+
+            <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-2xl mb-5 shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-between">
+                        Register Bot 
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg border border-blue-500/20">Modal</span>
+                    </h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">
+                        Discord Modal (Arayüz) tabanlı profesyonel kayıt, otomatik tag/isim kontrol ve yetkili teyit istatistik takip modülü.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-black text-emerald-400">₺450</span>
+                        <span class="text-white/40 text-xs">/ Aylık</span>
+                    </div>
+                    <a href="https://discord.gg/x7Crew" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 font-bold text-center rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+                        <i class="fas fa-shopping-cart"></i> Satın Al
+                    </a>
+                </div>
+            </div>
+
+            <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl mb-5 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-between">
+                        Ticket Bot 
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">Destek</span>
+                    </h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">
+                        Butonlu canlı destek talebi açma, talep kapatıldığında log kanalına transkript (HTML yedek) dökme ve yetkili atama paneli.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-black text-emerald-400">₺250</span>
+                        <span class="text-white/40 text-xs">/ Aylık</span>
+                    </div>
+                    <a href="https://discord.gg/x7Crew" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 font-bold text-center rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+                        <i class="fas fa-shopping-cart"></i> Satın Al
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 50) {
+                navbar.style.transform = 'translateY(-150%)';
+                navbar.style.opacity = '0';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.opacity = '1';
+            }
+            lastScrollY = window.scrollY;
+        });
+    </script>
+
+</body>
+</html>
