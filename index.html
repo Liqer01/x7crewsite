@@ -20,14 +20,18 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform-style: preserve-3d;
         }
 
-        .volume-slider {
-            -webkit-appearance: slider-vertical; appearance: slider-vertical;
-            writing-mode: bt-lr; width: 20px; height: 80px;
-            background: transparent; cursor: pointer; pointer-events: auto;
-            accent-color: #10b981;
+        /* Seek Bar */
+        .seek-slider {
+            width: 100%; height: 4px; accent-color: #10b981; cursor: pointer;
+            background: rgba(255,255,255,0.1); border-radius: 2px;
         }
 
-        /* Marquee Efekti */
+        /* Yeni Yatay Volume Slider */
+        .volume-slider {
+            width: 70px; height: 4px; accent-color: #10b981;
+            background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer;
+        }
+
         .marquee-container { width: 80px; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -49,7 +53,7 @@
         <img src="assets/logo.png" class="w-10 h-10 rounded-full border border-emerald-500/30 shadow-lg" alt="Logo">
         <div class="w-6 h-[1px] bg-white/10"></div>
         
-        <div class="flex flex-col items-center gap-3">
+        <div class="flex flex-col items-center gap-3 w-full">
             <div id="visualizer" class="visualizer paused">
                 <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             </div>
@@ -60,6 +64,14 @@
                 </div>
             </div>
             
+            <div class="w-full px-2">
+                <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0">
+                <div class="flex justify-between text-[8px] text-white/40 mt-1">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalDuration">0:00</span>
+                </div>
+            </div>
+
             <div class="flex items-center gap-2">
                 <button id="prevBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-backward text-xs"></i></button>
                 <button id="musicToggle" class="w-9 h-9 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center justify-center transition-all">
@@ -68,7 +80,10 @@
                 <button id="nextBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-forward text-xs"></i></button>
             </div>
 
-            <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+            <div class="flex items-center gap-2 mt-1">
+                <i class="fas fa-volume-up text-[10px] text-white/50"></i>
+                <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+            </div>
         </div>
     </div>
 </div>
@@ -101,7 +116,7 @@
 <script>
     const songs = [
         { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM' },
-        { src: 'assets/music5.mp3', title: 'SINAN - Bebegim' },
+        { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53' },
     ];
     
     let currentSongIndex = 0;
@@ -109,6 +124,15 @@
     const playIcon = document.getElementById('playIcon');
     const visualizer = document.getElementById('visualizer');
     const songTitle = document.getElementById('songTitle');
+    const seekSlider = document.getElementById('seekSlider');
+    const currentTimeText = document.getElementById('currentTime');
+    const totalDurationText = document.getElementById('totalDuration');
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
 
     function updateUI(isPlaying) {
         if (isPlaying) {
@@ -124,8 +148,23 @@
 
     function loadSong(index) {
         audio.src = songs[index].src;
-        songTitle.innerText = songs[index].title; // Şarkı ismi güncellenir
+        songTitle.innerText = songs[index].title;
     }
+
+    audio.addEventListener('timeupdate', () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        seekSlider.value = progress;
+        currentTimeText.innerText = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+        totalDurationText.innerText = formatTime(audio.duration);
+    });
+
+    seekSlider.addEventListener('input', () => {
+        const seekTime = (seekSlider.value / 100) * audio.duration;
+        audio.currentTime = seekTime;
+    });
 
     document.getElementById('musicToggle').addEventListener('click', () => {
         if (audio.paused) {
