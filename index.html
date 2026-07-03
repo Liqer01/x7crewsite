@@ -11,6 +11,10 @@
         body { transition: background 1s ease-in-out; background-image: url('assets/arkaplan1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; }
         
+        /* Sidebar Animasyonu - Yukarı alındı (top-[35%]) */
+        #sidebarContainer { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(0); }
+        #sidebarContainer.closed { transform: translateX(-200px); } 
+
         .left-bots-sidebar {
             background: linear-gradient(rgba(10, 10, 12, 0.85), rgba(10, 10, 12, 0.85)), url('assets/sidebar-bg.png');
             background-size: cover; background-position: center; background-repeat: no-repeat;
@@ -18,19 +22,11 @@
             border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
             padding: 20px 12px; display: flex; flex-direction: column; align-items: center; gap: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform-style: preserve-3d;
+            width: 200px;
         }
 
-        /* Seek Bar */
-        .seek-slider {
-            width: 100%; height: 4px; accent-color: #10b981; cursor: pointer;
-            background: rgba(255,255,255,0.1); border-radius: 2px;
-        }
-
-        /* Yeni Yatay Volume Slider */
-        .volume-slider {
-            width: 70px; height: 4px; accent-color: #10b981;
-            background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer;
-        }
+        .seek-slider { width: 100%; height: 4px; accent-color: #10b981; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .volume-slider { width: 70px; height: 4px; accent-color: #10b981; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; }
 
         .marquee-container { width: 80px; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; }
@@ -48,8 +44,9 @@
 </head>
 <body class="text-white font-sans min-h-screen">
 
-<div class="fixed top-[50%] left-6 -translate-y-[50%] z-[999]">
-    <div class="left-bots-sidebar" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+<div id="sidebarContainer" class="fixed top-[35%] left-0 z-[999] flex items-center closed">
+    
+    <div class="left-bots-sidebar" data-tilt data-tilt-max="10" data-tilt-speed="400">
         <img src="assets/logo.png" class="w-10 h-10 rounded-full border border-emerald-500/30 shadow-lg" alt="Logo">
         <div class="w-6 h-[1px] bg-white/10"></div>
         
@@ -57,13 +54,9 @@
             <div id="visualizer" class="visualizer paused">
                 <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             </div>
-            
             <div class="marquee-container">
-                <div id="songTitle" class="marquee-text text-[9px] text-emerald-400 font-bold uppercase tracking-widest">
-                    KAVAK & EGE! – RDM
-                </div>
+                <div id="songTitle" class="marquee-text text-[9px] text-emerald-400 font-bold uppercase tracking-widest">KAVAK & EGE! – RDM</div>
             </div>
-            
             <div class="w-full px-2">
                 <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0">
                 <div class="flex justify-between text-[8px] text-white/40 mt-1">
@@ -71,7 +64,6 @@
                     <span id="totalDuration">0:00</span>
                 </div>
             </div>
-
             <div class="flex items-center gap-2">
                 <button id="prevBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-backward text-xs"></i></button>
                 <button id="musicToggle" class="w-9 h-9 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center justify-center transition-all">
@@ -79,13 +71,16 @@
                 </button>
                 <button id="nextBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-forward text-xs"></i></button>
             </div>
-
             <div class="flex items-center gap-2 mt-1">
                 <i class="fas fa-volume-up text-[10px] text-white/50"></i>
                 <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
             </div>
         </div>
     </div>
+
+    <button id="toggleBtn" class="bg-[#0a0a0c]/80 border border-white/10 p-3 rounded-r-xl text-emerald-400 hover:text-white transition-all -ml-1">
+        <i id="toggleIcon" class="fas fa-chevron-right"></i>
+    </button>
 </div>
 
 <nav id="navbar" class="fixed top-6 left-4 right-4 md:left-24 md:right-24 z-50 flex items-center justify-between backdrop-blur-md bg-[#0a0a0c]/45 px-6 py-4 rounded-2xl border border-white/5 transition-opacity duration-500">
@@ -95,25 +90,31 @@
     </a>
     
     <div class="hidden md:flex items-center gap-6 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
-        <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
-            <i class="fas fa-home mr-1.5"></i> Ana Sayfa
-        </a>
-        <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
-            <i class="fas fa-robot mr-1.5"></i> Botlarımız
-        </a>
-        <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
-            <i class="fas fa-life-ring mr-1.5"></i> Destek Hattı
-        </a>
+        <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-home mr-1.5"></i> Ana Sayfa</a>
+        <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-robot mr-1.5"></i> Botlarımız</a>
+        <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
     </div>
 
-    <a href="http://localhost:3000/auth/discord" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all">
-        <i class="fab fa-discord mr-2"></i> Giriş
-    </a>
+    <a href="http://localhost:3000/auth/discord" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all"><i class="fab fa-discord mr-2"></i> Giriş</a>
 </nav>
 
 <audio id="audioPlayer"></audio>
 
 <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebarContainer = document.getElementById('sidebarContainer');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebarContainer.classList.toggle('closed');
+        if (sidebarContainer.classList.contains('closed')) {
+            toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+        } else {
+            toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+        }
+    });
+
+    // ... diğer JS kodları aynı ...
     const songs = [
         { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM' },
         { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53' },
@@ -153,8 +154,8 @@
 
     audio.addEventListener('timeupdate', () => {
         const progress = (audio.currentTime / audio.duration) * 100;
-        seekSlider.value = progress;
-        currentTimeText.innerText = formatTime(audio.currentTime);
+        seekSlider.value = progress || 0;
+        currentTimeText.innerText = formatTime(audio.currentTime || 0);
     });
 
     audio.addEventListener('loadedmetadata', () => {
