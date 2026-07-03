@@ -1,36 +1,107 @@
-/* Ana Glass Efekti */
+/* --- 1. Temel Ayarlar & Reset --- */
+body { 
+    transition: background 0.5s ease-in-out; 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #111214; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+
+/* --- 2. Glassmorphism & Tema --- */
 .glass {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
 
-/* Light Mode (Beyaz Tema) Ayarları */
-body.light-mode {
-    background-color: #f3f4f6;
-    color: #1f2937;
+/* Light Mode (Beyaz Tema) Override */
+body.light-mode { background-color: #f3f4f6; color: #1f2937; }
+body.light-mode .glass { 
+    background: rgba(0, 0, 0, 0.05); 
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+}
+body.light-mode h1, body.light-mode h3 { color: #111827; }
+body.light-mode .text-gray-400 { color: #6b7280; }
+
+/* --- 3. Sidebar & Layout (FİXLENDİ) --- */
+.left-bots-sidebar {
+    position: fixed; left: 24px; top: 50%; transform: translateY(-50%);
+    /* Arka plan resmi eklendi ve okunabilirlik için karartıldı */
+    background: linear-gradient(rgba(10, 10, 12, 0.7), rgba(10, 10, 12, 0.7)), url('assets/sidebar-bg.png');
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.06); 
+    border-radius: 40px;
+    padding: 24px 14px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 16px;
+    z-index: 900; 
+    /* Typo düzeltildi: 0 20px 50px */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
-body.light-mode .glass {
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+/* --- 4. Müzik Çalar Modülü --- */
+.music-module {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding: 16px 0; border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-body.light-mode h1, body.light-mode h3 {
-    color: #111827;
+.volume-slider {
+    -webkit-appearance: none; appearance: none;
+    writing-mode: bt-lr; /* Dikey yap */
+    width: 4px; height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px; cursor: pointer;
 }
 
-body.light-mode .text-gray-400 {
-    color: #6b7280;
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 12px; height: 12px;
+    background: #10b981; border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
 }
 
-<!-- Discord Bağlantı Butonu (Sol Üst) -->
-<a href="https://discord.gg/x7Crew" target="_blank" rel="noopener noreferrer" 
-   class="fixed top-6 left-6 z-50 glass p-3 rounded-full discord-glow transition-all duration-300 group">
-    
-    <!-- İkon -->
-    <svg class="w-7 h-7 text-white group-hover:text-[#5865F2] transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.1 18.055a.078.078 0 0 0 .03.054 19.791 19.791 0 0 0 5.95 3.085.074.074 0 0 0 .079-.038c.45-.63.856-1.3 1.21-2.004a.075.075 0 0 0-.041-.103 12.453 12.453 0 0 1-1.782-.876.075.075 0 0 1-.008-.124c.12-.089.24-.182.356-.275a.074.074 0 0 1 .077-.008 14.542 14.542 0 0 0 12.164 0 .074.074 0 0 1 .077.008c.117.093.237.186.356.275a.075.075 0 0 1-.008.124 12.453 12.453 0 0 1-1.782.876.075.075 0 0 0-.041.103c.355.705.76 1.375 1.21 2.004a.074.074 0 0 0 .079.038 19.791 19.791 0 0 0 5.95-3.085.078.078 0 0 0 .03-.054c.48-5.064-.373-9.613-3.483-14.286a.07.07 0 0 0-.032-.027ZM8.02 15.332c-1.18 0-2.15-1.085-2.15-2.418 0-1.333.955-2.418 2.15-2.418 1.21 0 2.17 1.085 2.15 2.418 0 1.333-.955 2.418-2.15 2.418Zm7.97 0c-1.18 0-2.15-1.085-2.15-2.418 0-1.333.955-2.418 2.15-2.418 1.21 0 2.17 1.085 2.15 2.418 0 1.333-.955 2.418-2.15 2.418Z"/>
-    </svg>
-</a>
+/* --- 5. Discord Butonu --- */
+.discord-glow:hover {
+    box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+    border-color: rgba(88, 101, 242, 0.5);
+}
+
+/* Müzik Görselleştirici (Visualizer) */
+.visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 15px;
+    margin-bottom: 10px;
+}
+
+.bar {
+    width: 3px;
+    height: 5px;
+    background: #10b981; /* Emerald-500 */
+    border-radius: 2px;
+    animation: bounce 1s infinite ease-in-out;
+}
+
+/* Animasyon durduğunda */
+.visualizer.paused .bar {
+    animation-play-state: paused;
+}
+
+/* Her bar için farklı zamanlama (dalga efekti) */
+.bar:nth-child(1) { animation-delay: 0.1s; }
+.bar:nth-child(2) { animation-delay: 0.3s; }
+.bar:nth-child(3) { animation-delay: 0.5s; }
+.bar:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes bounce {
+    0%, 100% { height: 5px; }
+    50% { height: 18px; }
+}
