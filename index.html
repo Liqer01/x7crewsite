@@ -149,12 +149,9 @@
             </a>
         </div>
 
-        <!-- Sağ Taraf: Discord Giriş Butonu -->
-        <a href="https://discord.gg/x7Crew" target="_blank" 
-           class="px-5 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-2 hover:scale-105 hover:bg-emerald-500/10 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-emerald-500/5">
-            <i class="fab fa-discord text-xl"></i>
-            Discord Giriş
-        </a>
+        <a href="http://localhost:3000/auth/discord" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2">
+    <i class="fab fa-discord"></i> Discord Giriş
+</a>
     </nav>
 
     <!-- SİTENİN MEVCUT DİĞER İÇERİKLERİ (KARTLAR, YAZILAR VS.) BURADAN İTİBAREN DEVAM ETSİN -->
@@ -223,212 +220,375 @@
         
    <div id="teamGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
     
-    <!-- 1. ClosyDEV -->
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <!-- Ön Yüz -->
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner1.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">ClosyDEV</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Developer</div></div>
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 bg-[#111214] border border-white/10 rounded-xl overflow-hidden [backface-visibility:hidden]">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner1.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar.png" class="w-full h-full object-cover">
             </div>
-            <!-- Arka Yüz (Görselli) -->
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden border border-white/10">
-                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('assets/arkaplankart.jpg');"></div>
-                <div class="absolute inset-0 bg-[#111214]/90 backdrop-blur-[2px]"></div>
-                <div class="relative z-10 w-full h-full p-4 flex flex-col items-center justify-center text-center">
-                    <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                    <p class="text-gray-300 text-xs px-2 leading-relaxed">Sunucu geliştirme ve script optimizasyonu üzerine çalışıyorum.</p>
-                    <a href="https://discord.com/users/1225205894128603198" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-md transition-all font-bold">PROFİLE GİT</a>
-                </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">ClosyDEV</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Developer</div>
             </div>
         </div>
-    </div>
 
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner2.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar2.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">Lyrex</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Boss</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden border border-white/10">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('assets/arkaplankart.jpg');"></div>
+            <div class="absolute inset-0 bg-[#111214]/90 backdrop-blur-[2px]"></div>
+            <div class="relative z-10 w-full h-full p-4 flex flex-col items-center justify-center text-center">
                 <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Sunucu yönetimi ve genel koordinasyon sorumlusu.</p>
-                <a href="https://discord.com/users/1044914333253111890" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+                <p class="text-gray-300 text-xs px-2 leading-relaxed">Sunucu geliştirme ve script optimizasyonu üzerine çalışıyorum.</p>
+                <a href="https://discord.com/users/1225205894128603198" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-md transition-all font-bold">PROFİLE GİT</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner2.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar2.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">Lyrex</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Boss</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Sunucu yönetimi ve genel koordinasyon sorumlusu.</p>
+            <a href="https://discord.com/users/1044914333253111890" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+ <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner3.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar3.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">riacztp</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Boss</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Genel yönetim.</p>
+            <a href="https://discord.com/users/571054792231747616" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner4.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar4.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">Sticky</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Ekip Sözcüsü</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Sözcü.</p>
+            <a href="https://discord.com/users/1240577767335002173" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner5.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar5.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">ExtarioN</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Yarrak Yiyen Götelek.</p>
+            <a href="https://discord.com/users/814057014560030730" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+     <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner6.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar6.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">Kivi</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/1064182086837219388" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner7.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar7.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">Madara</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/856928917646606356" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/son.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/son.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">CHAVO</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/690932942243102740" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+     <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar9.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar9.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">Sylxn</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/731203616211206176" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+     <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar11.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar11.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">WH | Phag</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/925447768225513563" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar12.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar12.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">y u s e x y</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <a href="https://discord.com/users/610881335808229386" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar8.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar8.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">sc4rfxce</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Sunucunun Prensesi.</p>
+            <a href="https://discord.com/users/390939683506356245" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        
+        <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
+            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar10.jpg');"></div>
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+                <img src="assets/avatar10.png" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-2 flex-grow flex flex-col items-center">
+                <h3 class="font-bold text-white text-md">MAVERICK</h3>
+                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+            <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
+            <p class="text-gray-400 text-xs">Sunucunun Prensesi.</p>
+            <a href="https://discord.com/users/1028573969831440404" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
+        </div>
+        
+    </div>
+</div>
+
+
+ </div> </div> <div class="w-full flex flex-col items-center gap-12 mt-16 mb-20">
+    
+    <button onclick="document.getElementById('hakkimizda').scrollIntoView({behavior: 'smooth'})" class="animate-bounce bg-white/10 hover:bg-white/20 px-6 py-3 rounded-full border border-white/10 transition-all backdrop-blur-md flex flex-col items-center gap-2">
+        <i class="fas fa-arrow-down text-white"></i>
+        <span class="text-xs font-bold uppercase tracking-widest">Aşağı Kaydır</span>
+    </button>
+
+    <div id="hakkimizda" class="w-full max-w-4xl px-4 scroll-mt-20">
+        </div>
+
+    <div class="w-full max-w-4xl px-4">
+        </div>
+
+</div>
+</div>
+
+
+<div id="hakkimizda" class="w-full max-w-4xl mx-auto px-4 mb-20 scroll-mt-20">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h2 class="text-white text-2xl font-bold">x7Crew Aktiflik Paneli</h2>
+        <a id="discord-login" href="http://localhost:3000/auth/discord" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2">
+            <i class="fab fa-discord"></i> Discord ile Bağlan
+        </a>
+    </div>
+
+   <div class="bg-[#111214] border border-white/10 rounded-xl overflow-hidden mt-6">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-gray-500 text-[10px] uppercase border-b border-white/5">
+                            <th class="p-4">Üye</th>
+                            <th class="p-4 text-center">Ses (Saat)</th>
+                            <th class="p-4 text-center">Mesaj</th>
+                            <th class="p-4 text-right">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="aktiflik-tbody" class="text-white text-sm">
+                        </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner3.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar3.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">riacztp</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Boss</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Genel yönetim.</p>
-                <a href="https://discord.com/users/571054792231747616" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Giriş kontrolü ve Veri çekme
+        fetch('/api/user-status')
+            .then(res => res.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    document.getElementById('login-area').style.display = 'none';
+                    document.getElementById('dashboard-area').style.display = 'block';
+                    document.getElementById('username').innerText = data.username;
 
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner4.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar4.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">Sticky</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Ekip Sözcüsü</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Sözcü.</p>
-                <a href="https://discord.com/users/1240577767335002173" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
- 
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner5.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar5.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">ExtarioN</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Yarrak Yiyen Götelek.</p>
-                <a href="https://discord.com/users/814057014560030730" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-     <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner6.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar6.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">Kivi</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/1064182086837219388" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner7.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar7.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">Madara</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/856928917646606356" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/son.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/son.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">CHAVO</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/690932942243102740" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-     <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar9.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar9.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">Sylxn</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/731203616211206176" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-     <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar11.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar11.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">WH | Phag</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/925447768225513563" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar12.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar12.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">y u s e x y</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <a href="https://discord.com/users/610881335808229386" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar8.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar8.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">sc4rfxce</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Sunucunun Prensesi.</p>
-                <a href="https://discord.com/users/390939683506356245" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="h-[280px] w-full [perspective:1000px] group">
-        <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            <div class="absolute inset-0 [backface-visibility:hidden] bg-[#111214] border border-white/10 rounded-xl overflow-hidden flex flex-col">
-                <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/avatar10.jpg');"></div>
-                <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black"><img src="assets/avatar10.png" class="w-full h-full object-cover"></div>
-                <div class="mt-2 flex-grow flex flex-col items-center"><h3 class="font-bold text-white text-md">MAVERICK</h3><div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">x7 Crew</div></div>
-            </div>
-            <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-400 text-xs">Sunucunun Prensesi.</p>
-                <a href="https://discord.com/users/1028573969831440404" target="_blank" class="mt-4 text-[10px] bg-emerald-600 text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
-            </div>
-        </div>
-    </div>
-
-
-    </div>
-    <div class="flex justify-center mt-6 mb-40">
-        <button onclick="document.getElementById('hakkimizda').scrollIntoView({behavior: 'smooth'})" class="animate-bounce bg-white/10 hover:bg-white/20 px-6 py-3 rounded-full border border-white/10 transition-all backdrop-blur-md flex flex-col items-center gap-2">
-            <i class="fas fa-arrow-down text-white"></i>
-            <span class="text-xs font-bold uppercase tracking-widest">Aşağı Kaydır</span>
-        </button>
-    </div>
+                    // Tabloyu doldur
+                    const tbody = document.getElementById('aktiflik-tbody');
+                    data.stats.forEach(u => {
+                        tbody.innerHTML += `
+                            <tr class="border-b border-white/5">
+                                <td class="p-4">${u.uye}</td>
+                                <td class="p-4 text-center">${u.ses}</td>
+                                <td class="p-4 text-center">${u.mesaj}</td>
+                                <td class="p-4 text-right">${u.durum}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            });
+    </script>
+</body>
+</html>
+    
 
     <div id="hakkimizda" class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl mx-auto px-4 mb-16">
         <div class="glass p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
@@ -675,3 +835,9 @@
 </html>
 
 
+<script src="aktiflik.js"></script>
+</body>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
