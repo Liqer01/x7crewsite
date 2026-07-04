@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,17 +45,18 @@
             <a href="bots.html" class="text-sm font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
                 <i class="fas fa-robot mr-1.5"></i> Botlarımız
             </a>
-            <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+           <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
                 <i class="fas fa-life-ring mr-1.5"></i> Destek Hattı
             </a>
+
+            <a id="navBots" href="başvuru.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Ekip Başvuru</a>
         </div>
 
-        <a href="https://discord.gg/x7Crew" target="_blank" 
-           class="px-5 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 font-bold flex items-center gap-2 hover:scale-105 hover:bg-emerald-500/10 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-emerald-500/5">
-            <i class="fab fa-discord text-xl"></i>
-            Discord Giriş
+        <a href="/auth/discord" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
+            <i class="fab fa-discord mr-2"></i> Giriş
         </a>
-    </nav>
+    </div>
+</nav>
 
     <div class="pt-32 max-w-7xl mx-auto">
         
@@ -68,7 +69,7 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-2 mb-24">
             
             <div class="bot-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
                 <div>
@@ -191,6 +192,30 @@
             </div>
 
         </div>
+
+        <div id="hakkimizda" class="px-2 pt-10 pb-20 border-t border-white/5">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-black mb-4">
+                    Neden <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">Biz?</span>
+                </h2>
+                <p class="text-white/60 text-base md:text-lg max-w-3xl mx-auto">
+                    NYX sunucusu ve ClosyDEV ekibi olarak, projelerinizde maksimum performans, kesintisiz destek ve şık arayüzler sunuyoruz. İşinizi şansa bırakmayın.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bot-card h-72 rounded-3xl p-2 group hover:border-emerald-500/50 transition-all overflow-hidden flex items-center justify-center relative">
+                    <img src="BURAYA_RESIM_1_LINKINI_YAPISTIR" alt="Hakkımızda 1" class="w-full h-full object-cover rounded-2xl opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                </div>
+                <div class="bot-card h-72 rounded-3xl p-2 group hover:border-emerald-500/50 transition-all overflow-hidden flex items-center justify-center relative">
+                    <img src="BURAYA_RESIM_2_LINKINI_YAPISTIR" alt="Hakkımızda 2" class="w-full h-full object-cover rounded-2xl opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                </div>
+                <div class="bot-card h-72 rounded-3xl p-2 group hover:border-emerald-500/50 transition-all overflow-hidden flex items-center justify-center relative">
+                    <img src="BURAYA_RESIM_3_LINKINI_YAPISTIR" alt="Hakkımızda 3" class="w-full h-full object-cover rounded-2xl opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
