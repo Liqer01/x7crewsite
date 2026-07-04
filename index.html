@@ -7,119 +7,280 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        body { transition: background 1s ease-in-out; background-image: url('assets/arkaplan1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; }
-        
-        /* Sidebar Animasyonu - Yukarı alındı (top-[35%]) */
-        #sidebarContainer { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(0); }
-        #sidebarContainer.closed { transform: translateX(-200px); } 
-
-        .left-bots-sidebar {
-            background: linear-gradient(rgba(10, 10, 12, 0.85), rgba(10, 10, 12, 0.85)), url('assets/sidebar-bg.png');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
-            padding: 20px 12px; display: flex; flex-direction: column; align-items: center; gap: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform-style: preserve-3d;
-            width: 200px;
+        :root {
+            --theme-color: #10b981;
+            --theme-color-rgb: 16, 185, 129;
+            --sidebar-bg-opacity: 0.60;
+            --sidebar-blur: 12px;
+            --sidebar-radius: 20px;
         }
 
-        .seek-slider { width: 100%; height: 4px; accent-color: #10b981; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .volume-slider { width: 70px; height: 4px; accent-color: #10b981; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; }
+        body { transition: background 1s ease-in-out; background-image: url('assets/arkaplan1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -2; }
+        
+        #sidebarContainer { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        .marquee-container { width: 80px; overflow: hidden; white-space: nowrap; }
+        .left-bots-sidebar {
+            background: linear-gradient(rgba(10, 10, 12, var(--sidebar-bg-opacity)), rgba(10, 10, 12, var(--sidebar-bg-opacity))), url('assets/sidebar-bg.png');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            backdrop-filter: blur(var(--sidebar-blur));
+            -webkit-backdrop-filter: blur(var(--sidebar-blur));
+            border: 1px solid rgba(var(--theme-color-rgb), 0.4); 
+            border-radius: var(--sidebar-radius);
+            padding: 16px 10px; display: flex; flex-direction: column; align-items: center; gap: 12px;
+            animation: pulse-glow 3s infinite alternate;
+            transform-style: preserve-3d;
+            width: 160px; position: relative;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(var(--theme-color-rgb), 0.2); }
+            100% { box-shadow: 0 0 25px rgba(var(--theme-color-rgb), 0.6); }
+        }
+
+        .text-theme { color: var(--theme-color); text-shadow: 0 0 8px rgba(var(--theme-color-rgb), 0.5); }
+        .text-theme-light { color: rgba(var(--theme-color-rgb), 0.8); }
+        .bg-theme-10 { background-color: rgba(var(--theme-color-rgb), 0.1); }
+        .hover\:bg-theme-20:hover { background-color: rgba(var(--theme-color-rgb), 0.2); }
+        .border-theme-20 { border-color: rgba(var(--theme-color-rgb), 0.3); }
+        .accent-theme { accent-color: var(--theme-color); }
+
+        .spin { animation: spin 4s linear infinite; }
+        .spin-paused { animation-play-state: paused; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .seek-slider { width: 100%; height: 3px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .volume-slider { -webkit-appearance: none; width: 50px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; cursor: pointer; transition: 0.3s; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 10px; height: 10px; background: var(--theme-color); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px var(--theme-color); }
+
+        .marquee-container { width: 85px; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 15px; margin-bottom: 5px; }
-        .bar { width: 3px; height: 5px; background: #10b981; border-radius: 2px; animation: bounce 1s infinite ease-in-out; }
-        .visualizer.paused .bar { animation-play-state: paused; height: 5px; }
+        .visualizer { display: flex; align-items: flex-end; gap: 2.5px; height: 12px; }
+        .bar { width: 2px; height: 4px; background: var(--theme-color); border-radius: 2px; animation: bounce 1s infinite ease-in-out; box-shadow: 0 0 6px var(--theme-color); }
+        .visualizer.paused .bar { animation-play-state: paused; height: 4px; }
         .bar:nth-child(1) { animation-delay: 0.1s; }
         .bar:nth-child(2) { animation-delay: 0.3s; }
         .bar:nth-child(3) { animation-delay: 0.5s; }
         .bar:nth-child(4) { animation-delay: 0.2s; }
-        @keyframes bounce { 0%, 100% { height: 5px; } 50% { height: 18px; } }
+        @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+
+        #settingsPanel::-webkit-scrollbar { width: 4px; }
+        #settingsPanel::-webkit-scrollbar-thumb { background: rgba(var(--theme-color-rgb), 0.5); border-radius: 4px; }
     </style>
 </head>
-<body class="text-white font-sans min-h-screen">
+<body class="text-white font-sans min-h-screen overflow-x-hidden">
 
-<div id="sidebarContainer" class="fixed top-[35%] left-0 z-[999] flex items-center closed">
-    
-    <div class="left-bots-sidebar" data-tilt data-tilt-max="10" data-tilt-speed="400">
-        <img src="assets/logo.png" class="w-10 h-10 rounded-full border border-emerald-500/30 shadow-lg" alt="Logo">
-        <div class="w-6 h-[1px] bg-white/10"></div>
+<div id="particles-js" class="fixed inset-0 z-[-1] pointer-events-none"></div>
+
+<div id="sidebarContainer" class="fixed top-[30%] left-0 z-[999] flex items-center -translate-x-[160px]">
+    <div class="left-bots-sidebar" data-tilt data-tilt-max="5" data-tilt-speed="400">
         
-        <div class="flex flex-col items-center gap-3 w-full">
+        <button id="settingsBtn" class="absolute top-3 left-3 text-[11px] text-white/50 hover:text-theme transition-all z-50">
+            <i class="fas fa-sliders-h"></i>
+        </button>
+
+        <div id="settingsPanel" class="hidden absolute top-0 left-[170px] bg-[#0a0a0c]/80 border border-theme-20 rounded-xl p-4 backdrop-blur-xl z-[100] w-44 shadow-[0_0_25px_rgba(0,0,0,0.9)] transition-all">
+            <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                <span class="text-[10px] font-bold text-theme tracking-wider">ÖZELLEŞTİR</span>
+                <i class="fas fa-paint-brush text-theme text-[10px]"></i>
+            </div>
+            
+            <!-- PARÇACIK TOGGLE -->
+            <div class="text-[9px] text-white/60 mb-3 font-medium flex justify-between items-center">
+                <span>Parçacık Efekti</span>
+                <button id="toggleParticlesBtn" class="text-theme font-bold bg-theme-10 px-2 py-0.5 rounded border border-theme-20">AÇIK</button>
+            </div>
+
+            <div class="text-[9px] text-white/60 mb-1.5 font-medium">Tema Rengi</div>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="w-4 h-4 rounded-full bg-[#10b981] hover:scale-125 transition-transform color-btn shadow-[0_0_5px_#10b981]" data-color="#10b981" data-rgb="16, 185, 129"></button>
+                <button class="w-4 h-4 rounded-full bg-[#3b82f6] hover:scale-125 transition-transform color-btn" data-color="#3b82f6" data-rgb="59, 130, 246"></button>
+                <button class="w-4 h-4 rounded-full bg-[#a855f7] hover:scale-125 transition-transform color-btn" data-color="#a855f7" data-rgb="168, 85, 247"></button>
+                <button class="w-4 h-4 rounded-full bg-[#ef4444] hover:scale-125 transition-transform color-btn" data-color="#ef4444" data-rgb="239, 68, 68"></button>
+                <button class="w-4 h-4 rounded-full bg-[#f59e0b] hover:scale-125 transition-transform color-btn" data-color="#f59e0b" data-rgb="245, 158, 11"></button>
+            </div>
+
+            <div class="text-[9px] text-white/60 mb-1.5 font-medium flex justify-between">
+                <span>Saydamlık</span> <span id="opacityVal" class="text-theme">60%</span>
+            </div>
+            <input type="range" id="bgOpacitySlider" min="0" max="0.9" step="0.05" value="0.60" class="w-full h-1 bg-white/10 rounded-full appearance-none outline-none mb-4 cursor-pointer accent-theme">
+
+            <div class="text-[9px] text-white/60 mb-1.5 font-medium flex justify-between">
+                <span>Bulanıklık (Blur)</span> <span id="blurVal" class="text-theme">12px</span>
+            </div>
+            <input type="range" id="blurSlider" min="0" max="30" step="1" value="12" class="w-full h-1 bg-white/10 rounded-full appearance-none outline-none mb-4 cursor-pointer accent-theme">
+
+            <div class="text-[9px] text-white/60 mb-1.5 font-medium flex justify-between">
+                <span>Köşe Ovalliği</span> <span id="radiusVal" class="text-theme">20px</span>
+            </div>
+            <input type="range" id="radiusSlider" min="0" max="40" step="1" value="20" class="w-full h-1 bg-white/10 rounded-full appearance-none outline-none cursor-pointer accent-theme">
+        </div>
+
+        <div id="clock" class="absolute top-3 right-3 text-[9px] text-theme-light font-bold tracking-wider">00:00</div>
+
+        <img id="diskLogo" src="assets/logo.png" class="w-10 h-10 rounded-full border-2 border-theme-20 shadow-[0_0_15px_rgba(var(--theme-color-rgb),0.4)] mt-3 spin spin-paused" alt="Logo">
+        <div class="w-6 h-[1px] bg-theme-20"></div>
+        
+        <div class="flex flex-col items-center gap-2.5 w-full">
             <div id="visualizer" class="visualizer paused">
                 <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             </div>
             <div class="marquee-container">
-                <div id="songTitle" class="marquee-text text-[9px] text-emerald-400 font-bold uppercase tracking-widest">KAVAK & EGE! – RDM</div>
+                <div id="songTitle" class="marquee-text text-[9px] text-theme font-bold uppercase tracking-widest">KAVAK & EGE! – RDM</div>
             </div>
             <div class="w-full px-2">
-                <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0">
-                <div class="flex justify-between text-[8px] text-white/40 mt-1">
+                <input type="range" id="seekSlider" class="seek-slider accent-theme" min="0" max="100" value="0">
+                <div class="flex justify-between text-[7px] text-white/50 mt-1 font-medium">
                     <span id="currentTime">0:00</span>
                     <span id="totalDuration">0:00</span>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button id="prevBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-backward text-xs"></i></button>
-                <button id="musicToggle" class="w-9 h-9 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center justify-center transition-all">
-                    <i id="playIcon" class="fas fa-play text-emerald-500 text-[10px]"></i>
+            <div class="flex items-center gap-3 mt-1">
+                <button id="prevBtn" class="text-white/40 hover:text-theme hover:scale-110 transition-all"><i class="fas fa-step-backward text-[10px]"></i></button>
+                <button id="musicToggle" class="w-8 h-8 rounded-full bg-theme-10 hover:bg-theme-20 border border-theme-20 flex items-center justify-center transition-all shadow-[0_0_10px_rgba(var(--theme-color-rgb),0.3)]">
+                    <i id="playIcon" class="fas fa-play text-theme text-[10px] ml-0.5"></i>
                 </button>
-                <button id="nextBtn" class="text-white/50 hover:text-emerald-400 transition-all"><i class="fas fa-step-forward text-xs"></i></button>
+                <button id="nextBtn" class="text-white/40 hover:text-theme hover:scale-110 transition-all"><i class="fas fa-step-forward text-[10px]"></i></button>
             </div>
-            <div class="flex items-center gap-2 mt-1">
-                <i class="fas fa-volume-up text-[10px] text-white/50"></i>
-                <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+            
+            <div class="flex items-center gap-2 mt-1 bg-black/40 px-2.5 py-1.5 rounded-full border border-white/10 w-[90%] justify-center">
+                <button id="muteBtn" class="text-white/50 hover:text-theme transition-all">
+                    <i id="muteIcon" class="fas fa-volume-up text-[9px] w-3"></i>
+                </button>
+                <input type="range" id="volumeBar" min="0" max="1" step="0.05" value="0.5" class="volume-slider flex-1">
+            </div>
+
+            <div class="flex gap-3 mt-1 pt-2 border-t border-white/5 w-full justify-center">
+                <a href="https://discord.gg/x7Crew" target="_blank" class="text-white/40 hover:text-[#5865F2] transition-colors"><i class="fab fa-discord text-[11px]"></i></a>
+                <a href="#" class="text-white/40 hover:text-white transition-colors"><i class="fab fa-github text-[11px]"></i></a>
+                <a href="#" class="text-white/40 hover:text-theme transition-colors"><i class="fas fa-globe text-[11px]"></i></a>
             </div>
         </div>
     </div>
 
-    <button id="toggleBtn" class="bg-[#0a0a0c]/80 border border-white/10 p-3 rounded-r-xl text-emerald-400 hover:text-white transition-all -ml-1">
-        <i id="toggleIcon" class="fas fa-chevron-right"></i>
+    <button id="toggleBtn" class="bg-[#0a0a0c]/80 border-y border-r border-white/10 p-2 rounded-r-xl text-theme hover:text-white transition-all h-[60px] w-8 flex items-center justify-center shadow-[5px_0_15px_rgba(0,0,0,0.5)] backdrop-blur-md cursor-pointer relative z-40">
+        <i id="toggleIcon" class="fas fa-chevron-right text-xs"></i>
     </button>
 </div>
 
-<nav id="navbar" class="fixed top-6 left-4 right-4 md:left-24 md:right-24 z-50 flex items-center justify-between backdrop-blur-md bg-[#0a0a0c]/45 px-6 py-4 rounded-2xl border border-white/5 transition-opacity duration-500">
+<nav id="navbar" class="fixed top-6 left-4 right-4 md:left-24 md:right-24 z-50 flex items-center justify-between backdrop-blur-md bg-[#0a0a0c]/45 px-6 py-4 rounded-2xl border border-white/5 transition-opacity duration-500 shadow-lg">
     <a href="index.html" class="flex items-center gap-3">
-        <img src="assets/logo.png" class="w-9 h-9 rounded-full border border-emerald-500/30 shadow-lg" alt="Logo">
-        <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">x7CREW</span>
+        <img src="assets/logo.png" class="w-9 h-9 rounded-full border border-theme-20 shadow-lg" alt="Logo">
+        <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--theme-color)] to-white">x7CREW</span>
     </a>
     
     <div class="hidden md:flex items-center gap-6 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
-        <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-home mr-1.5"></i> Ana Sayfa</a>
-        <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-robot mr-1.5"></i> Botlarımız</a>
-        <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
+        <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-home mr-1.5"></i> Ana Sayfa</a>
+        <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Botlarımız</a>
+        <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
     </div>
 
-    <a href="http://localhost:3000/auth/discord" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all"><i class="fab fa-discord mr-2"></i> Giriş</a>
+   </div>
+
+    <div class="flex items-center gap-3">
+        <div id="coinHeader" class="hidden items-center gap-2 bg-[#0a0a0c] border border-theme-20 px-3 py-2 rounded-lg">
+             <i class="fas fa-coins text-theme text-[10px]"></i>
+             <span id="navCoinCount" class="text-sm font-bold text-white">0 FC</span>
+        </div>
+
+        <a href="http://localhost:3000/auth.js" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
+            <i class="fab fa-discord mr-2"></i> Giriş
+        </a>
+    </div>
 </nav>
 
 <audio id="audioPlayer"></audio>
 
 <script>
+    // Parçacıklar
+    particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#ffffff" },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.2, "random": false },
+            "size": { "value": 2, "random": true },
+            "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+        },
+        "interactivity": {
+            "detect_on": "window",
+            "events": {
+                "onhover": { "enable": true, "mode": "grab" },
+                "onclick": { "enable": true, "mode": "push" },
+                "resize": true
+            },
+            "modes": {
+                "grab": { "distance": 180, "line_linked": { "opacity": 0.3 } },
+                "push": { "particles_nb": 3 }
+            }
+        },
+        "retina_detect": true
+    });
+
+    // Toggle Parçacıklar
+    const toggleParticlesBtn = document.getElementById('toggleParticlesBtn');
+    const particlesDiv = document.getElementById('particles-js');
+    let particlesOn = true;
+
+    toggleParticlesBtn.addEventListener('click', () => {
+        particlesOn = !particlesOn;
+        particlesDiv.style.display = particlesOn ? 'block' : 'none';
+        toggleParticlesBtn.innerText = particlesOn ? 'AÇIK' : 'KAPALI';
+        toggleParticlesBtn.classList.toggle('text-theme', particlesOn);
+        toggleParticlesBtn.classList.toggle('text-red-500', !particlesOn);
+    });
+
+    // Diğer Ayarlar
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const colorBtns = document.querySelectorAll('.color-btn');
+    const bgOpacitySlider = document.getElementById('bgOpacitySlider');
+    const blurSlider = document.getElementById('blurSlider');
+    const radiusSlider = document.getElementById('radiusSlider');
+    const opacityVal = document.getElementById('opacityVal');
+    const blurVal = document.getElementById('blurVal');
+    const radiusVal = document.getElementById('radiusVal');
+
+    settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); settingsPanel.classList.toggle('hidden'); });
+    document.addEventListener('click', (e) => { if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) settingsPanel.classList.add('hidden'); });
+
+    colorBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const color = e.target.getAttribute('data-color');
+            const rgb = e.target.getAttribute('data-rgb');
+            document.documentElement.style.setProperty('--theme-color', color);
+            document.documentElement.style.setProperty('--theme-color-rgb', rgb);
+            colorBtns.forEach(b => b.style.boxShadow = 'none');
+            e.target.style.boxShadow = `0 0 8px ${color}`;
+        });
+    });
+
+    bgOpacitySlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-bg-opacity', e.target.value); opacityVal.innerText = Math.round(e.target.value * 100) + '%'; });
+    blurSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-blur', e.target.value + 'px'); blurVal.innerText = e.target.value + 'px'; });
+    radiusSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-radius', e.target.value + 'px'); radiusVal.innerText = e.target.value + 'px'; });
+
+    function updateClock() { const now = new Date(); document.getElementById('clock').innerText = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); }
+    setInterval(updateClock, 1000);
+    updateClock();
+
     const toggleBtn = document.getElementById('toggleBtn');
     const sidebarContainer = document.getElementById('sidebarContainer');
     const toggleIcon = document.getElementById('toggleIcon');
-
     toggleBtn.addEventListener('click', () => {
-        sidebarContainer.classList.toggle('closed');
-        if (sidebarContainer.classList.contains('closed')) {
+        sidebarContainer.classList.toggle('-translate-x-[160px]');
+        if (sidebarContainer.classList.contains('-translate-x-[160px]')) {
             toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
-        } else {
-            toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
-        }
+            settingsPanel.classList.add('hidden');
+        } else { toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left'); }
     });
 
-    // ... diğer JS kodları aynı ...
-    const songs = [
-        { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM' },
-        { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53' },
-    ];
-    
+    const songs = [ { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM' }, { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53' } ];
     let currentSongIndex = 0;
     const audio = document.getElementById('audioPlayer');
     const playIcon = document.getElementById('playIcon');
@@ -128,73 +289,28 @@
     const seekSlider = document.getElementById('seekSlider');
     const currentTimeText = document.getElementById('currentTime');
     const totalDurationText = document.getElementById('totalDuration');
-
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-
-    function updateUI(isPlaying) {
-        if (isPlaying) {
-            playIcon.classList.remove('fa-play');
-            playIcon.classList.add('fa-pause');
-            visualizer.classList.remove('paused');
-        } else {
-            playIcon.classList.remove('fa-pause');
-            playIcon.classList.add('fa-play');
-            visualizer.classList.add('paused');
-        }
-    }
-
-    function loadSong(index) {
-        audio.src = songs[index].src;
-        songTitle.innerText = songs[index].title;
-    }
-
-    audio.addEventListener('timeupdate', () => {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        seekSlider.value = progress || 0;
-        currentTimeText.innerText = formatTime(audio.currentTime || 0);
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-        totalDurationText.innerText = formatTime(audio.duration);
-    });
-
-    seekSlider.addEventListener('input', () => {
-        const seekTime = (seekSlider.value / 100) * audio.duration;
-        audio.currentTime = seekTime;
-    });
-
-    document.getElementById('musicToggle').addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            updateUI(true);
-        } else {
-            audio.pause();
-            updateUI(false);
-        }
-    });
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-        currentSongIndex = (currentSongIndex + 1) % songs.length;
-        loadSong(currentSongIndex);
-        audio.play();
-        updateUI(true);
-    });
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-        loadSong(currentSongIndex);
-        audio.play();
-        updateUI(true);
-    });
-
+    const muteBtn = document.getElementById('muteBtn');
+    const muteIcon = document.getElementById('muteIcon');
     const volumeBar = document.getElementById('volumeBar');
+    const diskLogo = document.getElementById('diskLogo');
+
+    muteBtn.addEventListener('click', () => { audio.muted = !audio.muted; muteIcon.className = audio.muted ? 'fas fa-volume-mute text-[9px] w-3' : 'fas fa-volume-up text-[9px] w-3'; });
+    function updateUI(isPlaying) {
+        playIcon.className = isPlaying ? 'fas fa-pause text-theme text-[10px]' : 'fas fa-play text-theme text-[10px] ml-0.5';
+        if(isPlaying) { visualizer.classList.remove('paused'); diskLogo.classList.remove('spin-paused'); }
+        else { visualizer.classList.add('paused'); diskLogo.classList.add('spin-paused'); }
+    }
+    function loadSong(index) { audio.src = songs[index].src; songTitle.innerText = songs[index].title; }
+    audio.addEventListener('ended', () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
+    audio.addEventListener('timeupdate', () => { seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0; currentTimeText.innerText = formatTime(audio.currentTime || 0); });
+    audio.addEventListener('loadedmetadata', () => { totalDurationText.innerText = formatTime(audio.duration); });
+    function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+    seekSlider.addEventListener('input', () => { audio.currentTime = (seekSlider.value / 100) * audio.duration; });
+    document.getElementById('musicToggle').addEventListener('click', () => { audio.paused ? (audio.play(), updateUI(true)) : (audio.pause(), updateUI(false)); });
+    document.getElementById('nextBtn').addEventListener('click', () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
+    document.getElementById('prevBtn').addEventListener('click', () => { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
     audio.volume = parseFloat(volumeBar.value);
-    volumeBar.addEventListener('input', (e) => audio.volume = parseFloat(e.target.value));
-    
+    volumeBar.addEventListener('input', (e) => { audio.volume = parseFloat(e.target.value); audio.muted = false; muteIcon.className = 'fas fa-volume-up text-[9px] w-3'; });
     loadSong(0);
 </script>
 </body>
