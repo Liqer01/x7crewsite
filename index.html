@@ -69,8 +69,10 @@
         .bar:nth-child(4) { animation-delay: 0.2s; }
         @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 14px; } }
 
-        #settingsPanel::-webkit-scrollbar { width: 4px; }
-        #settingsPanel::-webkit-scrollbar-thumb { background: rgba(var(--theme-color-rgb), 0.5); border-radius: 4px; }
+        #settingsPanel::-webkit-scrollbar, #playlistPanel::-webkit-scrollbar, #lyricsContent::-webkit-scrollbar { width: 4px; }
+        #settingsPanel::-webkit-scrollbar-thumb, #playlistPanel::-webkit-scrollbar-thumb, #lyricsContent::-webkit-scrollbar-thumb { background: rgba(var(--theme-color-rgb), 0.5); border-radius: 4px; }
+        
+        .active-song { background-color: rgba(var(--theme-color-rgb), 0.2); border-left: 2px solid var(--theme-color); }
     </style>
 </head>
 <body class="text-white font-sans min-h-screen overflow-x-hidden">
@@ -90,7 +92,6 @@
                 <i class="fas fa-paint-brush text-theme text-[10px]"></i>
             </div>
             
-            <!-- PARÇACIK TOGGLE -->
             <div class="text-[9px] text-white/60 mb-3 font-medium flex justify-between items-center">
                 <span>Parçacık Efekti</span>
                 <button id="toggleParticlesBtn" class="text-theme font-bold bg-theme-10 px-2 py-0.5 rounded border border-theme-20">AÇIK</button>
@@ -121,18 +122,30 @@
             <input type="range" id="radiusSlider" min="0" max="40" step="1" value="20" class="w-full h-1 bg-white/10 rounded-full appearance-none outline-none cursor-pointer accent-theme">
         </div>
 
+        <div id="lyricsPanel" class="hidden absolute top-0 left-[170px] bg-[#0a0a0c]/80 border border-theme-20 rounded-xl p-4 backdrop-blur-xl z-[100] w-52 h-64 shadow-[0_0_25px_rgba(0,0,0,0.9)] transition-all flex flex-col">
+            <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2 shrink-0">
+                <span class="text-[10px] font-bold text-theme tracking-wider">ŞARKI SÖZLERİ</span>
+                <i class="fas fa-music text-theme text-[10px]"></i>
+            </div>
+            <div id="lyricsContent" class="text-[11px] text-white/80 overflow-y-auto pr-2 leading-relaxed text-center flex-1 whitespace-pre-line font-medium">
+                Sözler yükleniyor...
+            </div>
+        </div>
+
         <div id="clock" class="absolute top-3 right-3 text-[9px] text-theme-light font-bold tracking-wider">00:00</div>
 
-        <img id="diskLogo" src="assets/logo.png" class="w-10 h-10 rounded-full border-2 border-theme-20 shadow-[0_0_15px_rgba(var(--theme-color-rgb),0.4)] mt-3 spin spin-paused" alt="Logo">
+        <img id="diskLogo" src="assets/logo.png" class="w-10 h-10 rounded-full border-2 border-theme-20 shadow-[0_0_15px_rgba(var(--theme-color-rgb),0.4)] mt-3 spin spin-paused object-cover" alt="Cover">
         <div class="w-6 h-[1px] bg-theme-20"></div>
         
-        <div class="flex flex-col items-center gap-2.5 w-full">
+        <div class="flex flex-col items-center gap-2.5 w-full relative">
             <div id="visualizer" class="visualizer paused">
                 <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             </div>
+            
             <div class="marquee-container">
-                <div id="songTitle" class="marquee-text text-[9px] text-theme font-bold uppercase tracking-widest">KAVAK & EGE! – RDM</div>
+                <div id="songTitle" class="marquee-text text-[9px] text-theme font-bold uppercase tracking-widest">YÜKLENİYOR...</div>
             </div>
+            
             <div class="w-full px-2">
                 <input type="range" id="seekSlider" class="seek-slider accent-theme" min="0" max="100" value="0">
                 <div class="flex justify-between text-[7px] text-white/50 mt-1 font-medium">
@@ -140,19 +153,34 @@
                     <span id="totalDuration">0:00</span>
                 </div>
             </div>
+            
             <div class="flex items-center gap-3 mt-1">
+                <button id="shuffleBtn" class="text-white/30 hover:text-theme transition-all"><i class="fas fa-random text-[9px]"></i></button>
                 <button id="prevBtn" class="text-white/40 hover:text-theme hover:scale-110 transition-all"><i class="fas fa-step-backward text-[10px]"></i></button>
                 <button id="musicToggle" class="w-8 h-8 rounded-full bg-theme-10 hover:bg-theme-20 border border-theme-20 flex items-center justify-center transition-all shadow-[0_0_10px_rgba(var(--theme-color-rgb),0.3)]">
                     <i id="playIcon" class="fas fa-play text-theme text-[10px] ml-0.5"></i>
                 </button>
                 <button id="nextBtn" class="text-white/40 hover:text-theme hover:scale-110 transition-all"><i class="fas fa-step-forward text-[10px]"></i></button>
+                <button id="loopBtn" class="text-white/30 hover:text-theme transition-all"><i class="fas fa-redo text-[9px]"></i></button>
             </div>
             
-            <div class="flex items-center gap-2 mt-1 bg-black/40 px-2.5 py-1.5 rounded-full border border-white/10 w-[90%] justify-center">
+            <div class="flex items-center gap-2 mt-1 bg-black/40 px-2.5 py-1.5 rounded-full border border-white/10 w-[90%] justify-center relative">
                 <button id="muteBtn" class="text-white/50 hover:text-theme transition-all">
                     <i id="muteIcon" class="fas fa-volume-up text-[9px] w-3"></i>
                 </button>
                 <input type="range" id="volumeBar" min="0" max="1" step="0.05" value="0.5" class="volume-slider flex-1">
+                
+                <button id="playlistBtn" class="text-white/50 hover:text-theme transition-all ml-1" title="Şarkı Listesi">
+                    <i class="fas fa-list-ul text-[9px]"></i>
+                </button>
+                <button id="lyricsBtn" class="text-white/50 hover:text-theme transition-all" title="Şarkı Sözleri">
+                    <i class="fas fa-align-left text-[9px]"></i>
+                </button>
+            </div>
+
+            <div id="playlistPanel" class="hidden w-[90%] bg-black/60 border border-white/10 rounded-lg p-1.5 mt-1 max-h-24 overflow-y-auto z-50">
+                <ul id="playlistContainer" class="flex flex-col gap-1">
+                    </ul>
             </div>
 
             <div class="flex gap-3 mt-1 pt-2 border-t border-white/5 w-full justify-center">
@@ -180,15 +208,13 @@
         <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
     </div>
 
-   </div>
-
     <div class="flex items-center gap-3">
         <div id="coinHeader" class="hidden items-center gap-2 bg-[#0a0a0c] border border-theme-20 px-3 py-2 rounded-lg">
              <i class="fas fa-coins text-theme text-[10px]"></i>
              <span id="navCoinCount" class="text-sm font-bold text-white">0 FC</span>
         </div>
 
-        <a href="http://localhost:3000/auth.js" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
+        <a href="/auth/discord" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
             <i class="fab fa-discord mr-2"></i> Giriş
         </a>
     </div>
@@ -199,31 +225,11 @@
 <script>
     // Parçacıklar
     particlesJS('particles-js', {
-        "particles": {
-            "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#ffffff" },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.2, "random": false },
-            "size": { "value": 2, "random": true },
-            "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
-            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-        },
-        "interactivity": {
-            "detect_on": "window",
-            "events": {
-                "onhover": { "enable": true, "mode": "grab" },
-                "onclick": { "enable": true, "mode": "push" },
-                "resize": true
-            },
-            "modes": {
-                "grab": { "distance": 180, "line_linked": { "opacity": 0.3 } },
-                "push": { "particles_nb": 3 }
-            }
-        },
+        "particles": { "number": { "value": 70, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.2, "random": false }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
+        "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 180, "line_linked": { "opacity": 0.3 } }, "push": { "particles_nb": 3 } } },
         "retina_detect": true
     });
 
-    // Toggle Parçacıklar
     const toggleParticlesBtn = document.getElementById('toggleParticlesBtn');
     const particlesDiv = document.getElementById('particles-js');
     let particlesOn = true;
@@ -236,19 +242,24 @@
         toggleParticlesBtn.classList.toggle('text-red-500', !particlesOn);
     });
 
-    // Diğer Ayarlar
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsPanel = document.getElementById('settingsPanel');
     const colorBtns = document.querySelectorAll('.color-btn');
     const bgOpacitySlider = document.getElementById('bgOpacitySlider');
     const blurSlider = document.getElementById('blurSlider');
     const radiusSlider = document.getElementById('radiusSlider');
-    const opacityVal = document.getElementById('opacityVal');
-    const blurVal = document.getElementById('blurVal');
-    const radiusVal = document.getElementById('radiusVal');
 
-    settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); settingsPanel.classList.toggle('hidden'); });
-    document.addEventListener('click', (e) => { if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) settingsPanel.classList.add('hidden'); });
+    // Panelleri Aç/Kapat
+    settingsBtn.addEventListener('click', (e) => { 
+        e.stopPropagation(); 
+        settingsPanel.classList.toggle('hidden'); 
+        document.getElementById('lyricsPanel').classList.add('hidden'); // Diğer paneli kapat
+    });
+    
+    document.addEventListener('click', (e) => { 
+        if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) settingsPanel.classList.add('hidden'); 
+        if (!document.getElementById('lyricsPanel').contains(e.target) && !document.getElementById('lyricsBtn').contains(e.target)) document.getElementById('lyricsPanel').classList.add('hidden');
+    });
 
     colorBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -261,27 +272,48 @@
         });
     });
 
-    bgOpacitySlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-bg-opacity', e.target.value); opacityVal.innerText = Math.round(e.target.value * 100) + '%'; });
-    blurSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-blur', e.target.value + 'px'); blurVal.innerText = e.target.value + 'px'; });
-    radiusSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-radius', e.target.value + 'px'); radiusVal.innerText = e.target.value + 'px'; });
+    bgOpacitySlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-bg-opacity', e.target.value); });
+    blurSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-blur', e.target.value + 'px'); });
+    radiusSlider.addEventListener('input', (e) => { document.documentElement.style.setProperty('--sidebar-radius', e.target.value + 'px'); });
 
     function updateClock() { const now = new Date(); document.getElementById('clock').innerText = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); }
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClock, 1000); updateClock();
 
     const toggleBtn = document.getElementById('toggleBtn');
     const sidebarContainer = document.getElementById('sidebarContainer');
     const toggleIcon = document.getElementById('toggleIcon');
+    
     toggleBtn.addEventListener('click', () => {
         sidebarContainer.classList.toggle('-translate-x-[160px]');
         if (sidebarContainer.classList.contains('-translate-x-[160px]')) {
             toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
             settingsPanel.classList.add('hidden');
+            document.getElementById('lyricsPanel').classList.add('hidden');
         } else { toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left'); }
     });
 
-    const songs = [ { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM' }, { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53' } ];
+    // --- YENİ MÜZİK ÇALAR VE ŞARKI SÖZÜ SİSTEMİ ---
+    
+    // Şarkılarına "lyrics" (sözler) özelliği eklendi. Satır atlamak için "\n" kullanabilirsin.
+    const songs = [ 
+        { 
+            src: 'assets/music.mp3', 
+            title: 'KAVAK & EGE! – RDM', 
+            cover: 'assets/logo.png',
+            lyrics: 'birinci şarkının sözleri...\n\nSatır satıBurası r buraya yazabilirsin.\nKavak ve Ege sahnede!\nRDM akıyor bu gece.'
+        }, 
+        { 
+            src: 'assets/music11.mp3', 
+            title: 'Keskin & Wegh 55-53', 
+            cover: 'assets/logo.png',
+            lyrics: 'İkinci şarkının sözleri başlıyor.\n\n55-53 wegh ve keskin.\nSokaklar bizim mekan.\nSes ver ses!'
+        } 
+    ];
+    
     let currentSongIndex = 0;
+    let isShuffle = false;
+    let isLoop = false;
+
     const audio = document.getElementById('audioPlayer');
     const playIcon = document.getElementById('playIcon');
     const visualizer = document.getElementById('visualizer');
@@ -293,24 +325,118 @@
     const muteIcon = document.getElementById('muteIcon');
     const volumeBar = document.getElementById('volumeBar');
     const diskLogo = document.getElementById('diskLogo');
+    
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const loopBtn = document.getElementById('loopBtn');
+    const playlistBtn = document.getElementById('playlistBtn');
+    const playlistPanel = document.getElementById('playlistPanel');
+    const playlistContainer = document.getElementById('playlistContainer');
+
+    // YENİ: Lyrics Değişkenleri
+    const lyricsBtn = document.getElementById('lyricsBtn');
+    const lyricsPanel = document.getElementById('lyricsPanel');
+    const lyricsContent = document.getElementById('lyricsContent');
+
+    lyricsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        lyricsPanel.classList.toggle('hidden');
+        settingsPanel.classList.add('hidden'); // Ayarları kapat
+    });
+
+    function renderPlaylist() {
+        playlistContainer.innerHTML = '';
+        songs.forEach((song, index) => {
+            const li = document.createElement('li');
+            li.className = `text-[9px] p-1.5 rounded cursor-pointer truncate transition-colors text-white/70 hover:text-white ${index === currentSongIndex ? 'active-song text-theme font-bold' : 'hover:bg-white/5'}`;
+            li.innerText = `${index + 1}. ${song.title}`;
+            li.onclick = () => { currentSongIndex = index; loadSong(currentSongIndex); audio.play(); updateUI(true); playlistPanel.classList.add('hidden'); };
+            playlistContainer.appendChild(li);
+        });
+    }
+
+    playlistBtn.addEventListener('click', () => { playlistPanel.classList.toggle('hidden'); });
+
+    shuffleBtn.addEventListener('click', () => {
+        isShuffle = !isShuffle;
+        shuffleBtn.className = isShuffle ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all';
+    });
+
+    loopBtn.addEventListener('click', () => {
+        isLoop = !isLoop;
+        loopBtn.className = isLoop ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all';
+    });
 
     muteBtn.addEventListener('click', () => { audio.muted = !audio.muted; muteIcon.className = audio.muted ? 'fas fa-volume-mute text-[9px] w-3' : 'fas fa-volume-up text-[9px] w-3'; });
+    
     function updateUI(isPlaying) {
         playIcon.className = isPlaying ? 'fas fa-pause text-theme text-[10px]' : 'fas fa-play text-theme text-[10px] ml-0.5';
         if(isPlaying) { visualizer.classList.remove('paused'); diskLogo.classList.remove('spin-paused'); }
         else { visualizer.classList.add('paused'); diskLogo.classList.add('spin-paused'); }
     }
-    function loadSong(index) { audio.src = songs[index].src; songTitle.innerText = songs[index].title; }
-    audio.addEventListener('ended', () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
+
+    function loadSong(index) { 
+        audio.src = songs[index].src; 
+        songTitle.innerText = songs[index].title;
+        diskLogo.src = songs[index].cover || 'assets/logo.png';
+        
+        // YENİ: Sözleri Güncelle
+        lyricsContent.innerText = songs[index].lyrics || "Bu şarkı için söz bulunamadı 🎵";
+        
+        renderPlaylist();
+    }
+
+    document.getElementById('musicToggle').addEventListener('click', () => {
+        if(audio.paused) { audio.play().catch(e => console.log("Otomatik oynatma engellendi.")); updateUI(true); } 
+        else { audio.pause(); updateUI(false); }
+    });
+
+    audio.addEventListener('ended', () => {
+        if (isLoop) {
+            audio.currentTime = 0;
+            audio.play();
+        } else if (isShuffle) {
+            currentSongIndex = Math.floor(Math.random() * songs.length);
+            loadSong(currentSongIndex); audio.play(); updateUI(true);
+        } else {
+            currentSongIndex = (currentSongIndex + 1) % songs.length; 
+            loadSong(currentSongIndex); audio.play(); updateUI(true);
+        }
+    });
+
     audio.addEventListener('timeupdate', () => { seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0; currentTimeText.innerText = formatTime(audio.currentTime || 0); });
     audio.addEventListener('loadedmetadata', () => { totalDurationText.innerText = formatTime(audio.duration); });
     function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+    
     seekSlider.addEventListener('input', () => { audio.currentTime = (seekSlider.value / 100) * audio.duration; });
-    document.getElementById('musicToggle').addEventListener('click', () => { audio.paused ? (audio.play(), updateUI(true)) : (audio.pause(), updateUI(false)); });
-    document.getElementById('nextBtn').addEventListener('click', () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
-    document.getElementById('prevBtn').addEventListener('click', () => { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
-    audio.volume = parseFloat(volumeBar.value);
-    volumeBar.addEventListener('input', (e) => { audio.volume = parseFloat(e.target.value); audio.muted = false; muteIcon.className = 'fas fa-volume-up text-[9px] w-3'; });
+    
+    document.getElementById('nextBtn').addEventListener('click', () => { 
+        if (isShuffle) currentSongIndex = Math.floor(Math.random() * songs.length);
+        else currentSongIndex = (currentSongIndex + 1) % songs.length; 
+        loadSong(currentSongIndex); audio.play(); updateUI(true); 
+    });
+    
+    document.getElementById('prevBtn').addEventListener('click', () => { 
+        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; 
+        loadSong(currentSongIndex); audio.play(); updateUI(true); 
+    });
+    
+    // Hafızalı Ses Sistemi
+    const savedVolume = localStorage.getItem('x7_music_volume');
+    if (savedVolume !== null) {
+        audio.volume = parseFloat(savedVolume);
+        volumeBar.value = savedVolume;
+    } else {
+        audio.volume = 0.5;
+    }
+
+    volumeBar.addEventListener('input', (e) => { 
+        audio.volume = parseFloat(e.target.value); 
+        audio.muted = false; 
+        muteIcon.className = 'fas fa-volume-up text-[9px] w-3'; 
+        localStorage.setItem('x7_music_volume', e.target.value); 
+    });
+    
+    // İlk açılışta yükle
     loadSong(0);
 </script>
 </body>
@@ -585,7 +711,7 @@
 
         <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
             <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-             <p class="text-gray-400 text-xs">Kadın Avcısı.</p>
+             <p class="text-gray-400 text-xs">Kadın Avcısı. Sapık</p>
             <a href="https://discord.com/users/731203616211206176" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
         </div>
         
