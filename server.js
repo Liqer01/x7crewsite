@@ -52,3 +52,22 @@ app.get('/api/user-status', (req, res) => {
 });
 
 app.listen(3000, () => console.log('x7Crew Paneli http://localhost:3000 adresinde çalışıyor!'));
+
+const audio = document.getElementById('audioPlayer');
+const toggleBtn = document.getElementById('musicToggle');
+const playIcon = document.getElementById('playIcon');
+const volumeBar = document.getElementById('volumeBar');
+
+toggleBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        playIcon.classList.replace('fa-play', 'fa-pause');
+    } else {
+        audio.pause();
+        playIcon.classList.replace('fa-pause', 'fa-play');
+    }
+});
+
+volumeBar.addEventListener('input', (e) => {
+    audio.volume = e.target.value;
+});
