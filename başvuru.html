@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Başvuru | x7CREW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #050506; }
+        .glass { background: rgba(17, 18, 20, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between bg-[#0a0a0c]/60 border border-white/10 backdrop-blur-xl px-8 py-3 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all hover:border-emerald-500/30">
+            <div class="flex items-center gap-3">
+                <img src="assets/logo.png" class="w-8 h-8">
+                <span class="text-xl font-black tracking-tighter text-white">x7<span class="text-emerald-500">CREW</span></span>
+            </div>
+
+         <div class="hidden md:flex items-center gap-8 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
+            <a href="index.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-home mr-1.5"></i> Ana Sayfa
+            </a>
+            <a href="bots.html" class="text-sm font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
+                <i class="fas fa-robot mr-1.5"></i> Botlarımız
+            </a>
+           <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-life-ring mr-1.5"></i> Destek Hattı
+            </a>
+
+            <a id="navBots" href="başvuru.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Ekip Başvuru</a>
+        </div>
+
+        <a href="/auth/discord" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
+            <i class="fab fa-discord mr-2"></i> Giriş
+        </a>
+    </div>
+</nav>
+
+    <!-- FORM ALANI -->
+    <main class="pt-32 pb-20 px-6 flex justify-center items-center">
+        <div class="w-full max-w-2xl glass p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-60 h-60 bg-emerald-500/10 blur-[100px] rounded-full"></div>
+            
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Ekip Başvurusu</h1>
+                <p class="text-gray-500 text-sm tracking-wide uppercase">x7Crew bünyesine katılmak için formu doldur</p>
+            </div>
+
+            <form id="applicationForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Ad</label>
+                        <input type="text" name="ad" placeholder="Burak" required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Soyad</label>
+                        <input type="text" name="soyad" placeholder="Sağlam" required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Yaş</label>
+                        <input type="number" name="yas" placeholder="20" required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Discord Adı</label>
+                        <input type="text" name="discord" placeholder="kullanici#0000" required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Karakter Adı (IC)</label>
+                    <input type="text" name="ic_isim" placeholder="John Doe" required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Ekibe Ne Katabilirsin?</label>
+                    <textarea name="neden" rows="4" placeholder="Neden x7Crew'e girmek istiyorsun? Yeteneklerinden bahset..." required class="w-full bg-[#050506] border border-white/10 rounded-xl p-4 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <!-- ID EKLEDİM (id="submitBtn") -->
+                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:scale-[1.01]">
+                    BAŞVURUYU GÖNDER
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('applicationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Gönderiliyor...";
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const payload = {
+                embeds: [{
+                    title: "🔔 Yeni Başvuru!",
+                    color: 0x10b981,
+                    fields: [
+                        { name: "👤 İsim", value: `${data.ad} ${data.soyad}`, inline: true },
+                        { name: "🎂 Yaş", value: data.yas, inline: true },
+                        { name: "👾 Discord", value: data.discord, inline: false },
+                        { name: "🎭 IC İsim", value: data.ic_isim, inline: false },
+                        { name: "📝 Neden", value: data.neden, inline: false }
+                    ]
+                }],
+                components: [{
+                    type: 1,
+                    components: [
+                        { type: 2, style: 3, label: "✅ Onayla", custom_id: "btn_onayla" },
+                        { type: 2, style: 4, label: "❌ Reddet", custom_id: "btn_reddet" }
+                    ]
+                }]
+            };
+
+            try {
+                await fetch('https://discord.com/api/webhooks/1522870192802234479/C9He0SBgPn5UznLA2RUnd5beD_u4uB0cv4Wg1sBORfDJRw1qGe5GFYNMJsUm6pjIbdLc', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                alert("Başvurun başarıyla ulaştı!");
+                e.target.reset();
+            } catch (err) {
+                alert("Hata oluştu.");
+            } finally {
+                btn.innerText = "BAŞVURUYU GÖNDER";
+            }
+        });
+    </script>
+</body>
+</html>
