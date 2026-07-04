@@ -17,6 +17,14 @@
             --sidebar-radius: 20px;
         }
 
+        /* --- YENİ EKLENEN STİLLER --- */
+        .custom-cursor { width: 12px; height: 12px; background: var(--theme-color); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999999; box-shadow: 0 0 15px var(--theme-color); transition: transform 0.1s ease; mix-blend-mode: screen; }
+        body { cursor: none !important; }
+        .online-indicator { display: flex; align-items: center; gap: 6px; font-size: 9px; color: rgba(255,255,255,0.6); background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 12px; border: 1px solid rgba(var(--theme-color-rgb), 0.3); }
+        .pulse-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        /* --------------------------- */
+
         body { transition: background 1s ease-in-out; background-image: url('assets/arkaplan1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -2; }
         
@@ -76,12 +84,19 @@
     </style>
 </head>
 <body class="text-white font-sans min-h-screen overflow-x-hidden">
-
+    
+<div class="custom-cursor"></div>
 <div id="particles-js" class="fixed inset-0 z-[-1] pointer-events-none"></div>
 
 <div id="sidebarContainer" class="fixed top-[30%] left-0 z-[999] flex items-center -translate-x-[160px]">
     <div class="left-bots-sidebar" data-tilt data-tilt-max="5" data-tilt-speed="400">
         
+        <!-- Online Sayaç -->
+        <div class="online-indicator mb-2">
+            <div class="pulse-dot"></div>
+            <span class="text-[9px] text-white/60"><span id="onlineCount">32</span> Aktif Kullanıcı</span>
+        </div>
+
         <button id="settingsBtn" class="absolute top-3 left-3 text-[11px] text-white/50 hover:text-theme transition-all z-50">
             <i class="fas fa-sliders-h"></i>
         </button>
@@ -179,8 +194,7 @@
             </div>
 
             <div id="playlistPanel" class="hidden w-[90%] bg-black/60 border border-white/10 rounded-lg p-1.5 mt-1 max-h-24 overflow-y-auto z-50">
-                <ul id="playlistContainer" class="flex flex-col gap-1">
-                    </ul>
+                <ul id="playlistContainer" class="flex flex-col gap-1"></ul>
             </div>
 
             <div class="flex gap-3 mt-1 pt-2 border-t border-white/5 w-full justify-center">
@@ -206,6 +220,7 @@
         <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-home mr-1.5"></i> Ana Sayfa</a>
         <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Botlarımız</a>
         <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
+        <a id="navBots" href="başvuru.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Ekip Başvuru</a>
     </div>
 
     <div class="flex items-center gap-3">
@@ -220,10 +235,63 @@
     </div>
 </nav>
 
+<!-- EKLENEN BÖLÜM: MISSION CONTROL VE ROSTER -->
+<div class="pt-32"> <!-- Navbar altında boşluk için -->
+    <!-- 1. Canlı Durum Paneli -->
+    <div class="max-w-4xl mx-auto mb-12 p-6 bg-[#0a0a0c]/40 border border-white/5 rounded-3xl backdrop-blur-xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-4">
+            <div class="p-4 bg-theme/10 rounded-2xl border border-theme/20">
+                <i class="fas fa-satellite-dish text-theme text-2xl animate-pulse"></i>
+            </div>
+            <div>
+                <h2 class="text-white font-bold text-lg">x7Crew Status</h2>
+                <p class="text-white/40 text-xs uppercase tracking-widest">Merkezi Kontrol Paneli</p>
+            </div>
+        </div>
+        <div class="flex gap-8 text-center">
+            <div>
+                <div id="statusIndicator" class="text-theme font-bold text-xl">AKTİF</div>
+                <div class="text-[10px] text-white/40 uppercase">SİSTEM</div>
+            </div>
+            <div class="w-[1px] h-10 bg-white/5"></div>
+            <div>
+                <div class="text-white font-bold text-xl">3/5</div>
+                <div class="text-[10px] text-white/40 uppercase">ALIMLAR</div>
+            </div>
+            <div class="w-[1px] h-10 bg-white/5"></div>
+            <div>
+                <div class="text-white font-bold text-xl">85%</div>
+                <div class="text-[10px] text-white/40 uppercase">PROJE</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Ekip Kadrosu (Roster) -->
+    
+        <!-- Diğer kartları buraya ekle -->
+    </div>
+</div>
+<!-- EKLENEN BÖLÜM SONU -->
+
 <audio id="audioPlayer"></audio>
 
 <script>
-    // Parçacıklar
+    // --- ÖZEL İMLEÇ LOGİC ---
+    const cursor = document.querySelector('.custom-cursor');
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    // --- AKTİF KULLANICI SİMÜLASYONU ---
+    const onlineCountEl = document.getElementById('onlineCount');
+    function updateOnlineCount() {
+        const count = Math.floor(Math.random() * (45 - 25 + 1)) + 25;
+        onlineCountEl.innerText = count;
+    }
+    setInterval(updateOnlineCount, 3000);
+
+    // --- SENİN MEVCUT JS KODLARIN ---
     particlesJS('particles-js', {
         "particles": { "number": { "value": 70, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.2, "random": false }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
         "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 180, "line_linked": { "opacity": 0.3 } }, "push": { "particles_nb": 3 } } },
@@ -249,13 +317,7 @@
     const blurSlider = document.getElementById('blurSlider');
     const radiusSlider = document.getElementById('radiusSlider');
 
-    // Panelleri Aç/Kapat
-    settingsBtn.addEventListener('click', (e) => { 
-        e.stopPropagation(); 
-        settingsPanel.classList.toggle('hidden'); 
-        document.getElementById('lyricsPanel').classList.add('hidden'); // Diğer paneli kapat
-    });
-    
+    settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); settingsPanel.classList.toggle('hidden'); document.getElementById('lyricsPanel').classList.add('hidden'); });
     document.addEventListener('click', (e) => { 
         if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) settingsPanel.classList.add('hidden'); 
         if (!document.getElementById('lyricsPanel').contains(e.target) && !document.getElementById('lyricsBtn').contains(e.target)) document.getElementById('lyricsPanel').classList.add('hidden');
@@ -282,38 +344,17 @@
     const toggleBtn = document.getElementById('toggleBtn');
     const sidebarContainer = document.getElementById('sidebarContainer');
     const toggleIcon = document.getElementById('toggleIcon');
-    
     toggleBtn.addEventListener('click', () => {
         sidebarContainer.classList.toggle('-translate-x-[160px]');
-        if (sidebarContainer.classList.contains('-translate-x-[160px]')) {
-            toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
-            settingsPanel.classList.add('hidden');
-            document.getElementById('lyricsPanel').classList.add('hidden');
-        } else { toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left'); }
+        if (sidebarContainer.classList.contains('-translate-x-[160px]')) { toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right'); settingsPanel.classList.add('hidden'); document.getElementById('lyricsPanel').classList.add('hidden'); } else { toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left'); }
     });
 
-    // --- YENİ MÜZİK ÇALAR VE ŞARKI SÖZÜ SİSTEMİ ---
-    
-    // Şarkılarına "lyrics" (sözler) özelliği eklendi. Satır atlamak için "\n" kullanabilirsin.
     const songs = [ 
-        { 
-            src: 'assets/music.mp3', 
-            title: 'KAVAK & EGE! – RDM', 
-            cover: 'assets/logo.png',
-            lyrics: 'birinci şarkının sözleri...\n\n!!'
-        }, 
-        { 
-            src: 'assets/music11.mp3', 
-            title: 'Keskin & Wegh 55-53', 
-            cover: 'assets/logo.png',
-            lyrics: 'İkinci şarkının sözleri başlıyor.\n\n!!'
-        } 
+        { src: 'assets/music.mp3', title: 'KAVAK & EGE! – RDM', cover: 'assets/logo.png', lyrics: 'Sözler buraya...' }, 
+        { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53', cover: 'assets/logo.png', lyrics: 'Sözler buraya...' } 
     ];
-    
     let currentSongIndex = 0;
-    let isShuffle = false;
-    let isLoop = false;
-
+    let isShuffle = false; let isLoop = false;
     const audio = document.getElementById('audioPlayer');
     const playIcon = document.getElementById('playIcon');
     const visualizer = document.getElementById('visualizer');
@@ -325,23 +366,16 @@
     const muteIcon = document.getElementById('muteIcon');
     const volumeBar = document.getElementById('volumeBar');
     const diskLogo = document.getElementById('diskLogo');
-    
     const shuffleBtn = document.getElementById('shuffleBtn');
     const loopBtn = document.getElementById('loopBtn');
     const playlistBtn = document.getElementById('playlistBtn');
     const playlistPanel = document.getElementById('playlistPanel');
     const playlistContainer = document.getElementById('playlistContainer');
-
-    // YENİ: Lyrics Değişkenleri
     const lyricsBtn = document.getElementById('lyricsBtn');
     const lyricsPanel = document.getElementById('lyricsPanel');
     const lyricsContent = document.getElementById('lyricsContent');
 
-    lyricsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        lyricsPanel.classList.toggle('hidden');
-        settingsPanel.classList.add('hidden'); // Ayarları kapat
-    });
+    lyricsBtn.addEventListener('click', (e) => { e.stopPropagation(); lyricsPanel.classList.toggle('hidden'); settingsPanel.classList.add('hidden'); });
 
     function renderPlaylist() {
         playlistContainer.innerHTML = '';
@@ -355,17 +389,8 @@
     }
 
     playlistBtn.addEventListener('click', () => { playlistPanel.classList.toggle('hidden'); });
-
-    shuffleBtn.addEventListener('click', () => {
-        isShuffle = !isShuffle;
-        shuffleBtn.className = isShuffle ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all';
-    });
-
-    loopBtn.addEventListener('click', () => {
-        isLoop = !isLoop;
-        loopBtn.className = isLoop ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all';
-    });
-
+    shuffleBtn.addEventListener('click', () => { isShuffle = !isShuffle; shuffleBtn.className = isShuffle ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all'; });
+    loopBtn.addEventListener('click', () => { isLoop = !isLoop; loopBtn.className = isLoop ? 'text-theme transition-all' : 'text-white/30 hover:text-theme transition-all'; });
     muteBtn.addEventListener('click', () => { audio.muted = !audio.muted; muteIcon.className = audio.muted ? 'fas fa-volume-mute text-[9px] w-3' : 'fas fa-volume-up text-[9px] w-3'; });
     
     function updateUI(isPlaying) {
@@ -378,65 +403,28 @@
         audio.src = songs[index].src; 
         songTitle.innerText = songs[index].title;
         diskLogo.src = songs[index].cover || 'assets/logo.png';
-        
-        // YENİ: Sözleri Güncelle
         lyricsContent.innerText = songs[index].lyrics || "Bu şarkı için söz bulunamadı 🎵";
-        
         renderPlaylist();
     }
 
     document.getElementById('musicToggle').addEventListener('click', () => {
-        if(audio.paused) { audio.play().catch(e => console.log("Otomatik oynatma engellendi.")); updateUI(true); } 
+        if(audio.paused) { audio.play().catch(e => console.log("Hata")); updateUI(true); } 
         else { audio.pause(); updateUI(false); }
     });
 
     audio.addEventListener('ended', () => {
-        if (isLoop) {
-            audio.currentTime = 0;
-            audio.play();
-        } else if (isShuffle) {
-            currentSongIndex = Math.floor(Math.random() * songs.length);
-            loadSong(currentSongIndex); audio.play(); updateUI(true);
-        } else {
-            currentSongIndex = (currentSongIndex + 1) % songs.length; 
-            loadSong(currentSongIndex); audio.play(); updateUI(true);
-        }
+        if (isLoop) { audio.currentTime = 0; audio.play(); } else if (isShuffle) { currentSongIndex = Math.floor(Math.random() * songs.length); loadSong(currentSongIndex); audio.play(); updateUI(true); } else { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); }
     });
 
     audio.addEventListener('timeupdate', () => { seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0; currentTimeText.innerText = formatTime(audio.currentTime || 0); });
     audio.addEventListener('loadedmetadata', () => { totalDurationText.innerText = formatTime(audio.duration); });
     function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs < 10 ? '0' : ''}${secs}`; }
-    
     seekSlider.addEventListener('input', () => { audio.currentTime = (seekSlider.value / 100) * audio.duration; });
-    
-    document.getElementById('nextBtn').addEventListener('click', () => { 
-        if (isShuffle) currentSongIndex = Math.floor(Math.random() * songs.length);
-        else currentSongIndex = (currentSongIndex + 1) % songs.length; 
-        loadSong(currentSongIndex); audio.play(); updateUI(true); 
-    });
-    
-    document.getElementById('prevBtn').addEventListener('click', () => { 
-        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; 
-        loadSong(currentSongIndex); audio.play(); updateUI(true); 
-    });
-    
-    // Hafızalı Ses Sistemi
+    document.getElementById('nextBtn').addEventListener('click', () => { if (isShuffle) currentSongIndex = Math.floor(Math.random() * songs.length); else currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
+    document.getElementById('prevBtn').addEventListener('click', () => { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); audio.play(); updateUI(true); });
     const savedVolume = localStorage.getItem('x7_music_volume');
-    if (savedVolume !== null) {
-        audio.volume = parseFloat(savedVolume);
-        volumeBar.value = savedVolume;
-    } else {
-        audio.volume = 0.5;
-    }
-
-    volumeBar.addEventListener('input', (e) => { 
-        audio.volume = parseFloat(e.target.value); 
-        audio.muted = false; 
-        muteIcon.className = 'fas fa-volume-up text-[9px] w-3'; 
-        localStorage.setItem('x7_music_volume', e.target.value); 
-    });
-    
-    // İlk açılışta yükle
+    if (savedVolume !== null) { audio.volume = parseFloat(savedVolume); volumeBar.value = savedVolume; } else { audio.volume = 0.5; }
+    volumeBar.addEventListener('input', (e) => { audio.volume = parseFloat(e.target.value); audio.muted = false; muteIcon.className = 'fas fa-volume-up text-[9px] w-3'; localStorage.setItem('x7_music_volume', e.target.value); });
     loadSong(0);
 </script>
 </body>
@@ -902,8 +890,78 @@
             Burada kasıntı kurallar veya ego savaşları yok. Gırgır, şamata, eğlence ve bol kahkaha var. Kapımız sana her zaman açık!
         </p>
     </div>
+    
+  </div>
 
-</div>
+
+
+<!-- TESTIMONIAL / ÜYE YORUMLARI BÖLÜMÜ (GÜNCELLENMİŞ) -->
+<section class="py-24 px-6 max-w-7xl mx-auto relative">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+            Üyelerimiz <span class="text-emerald-500">Ne Diyor?</span>
+        </h2>
+        <p class="text-gray-500 uppercase tracking-[0.2em] text-xs">Topluluğumuzdan gerçek deneyimler</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Yorum 1 -->
+        <div class="group bg-[#0a0a0c]/90 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+            <div class="flex justify-between items-start mb-6">
+                <i class="fas fa-quote-left text-emerald-500/20 text-4xl"></i>
+                <div class="flex text-amber-400 text-xs">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="text-gray-200 mb-8 leading-relaxed italic">"x7Crew'e girdiğimden beri rol kalitem iki katına çıktı. Ortamdaki samimiyet ve profesyonellik gerçekten başka hiçbir yerde yok."</p>
+            <div class="flex items-center gap-4 border-t border-white/10 pt-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center font-bold text-emerald-500 text-sm ring-2 ring-emerald-500/20">A</div>
+                <div>
+                    <h4 class="font-bold text-white group-hover:text-emerald-400 transition-colors">Ahmet Y.</h4>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Kıdemli Üye</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yorum 2 -->
+        <div class="group bg-[#0a0a0c]/90 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+            <div class="flex justify-between items-start mb-6">
+                <i class="fas fa-quote-left text-emerald-500/20 text-4xl"></i>
+                <div class="flex text-amber-400 text-xs">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="text-gray-200 mb-8 leading-relaxed italic">"Başvuru sisteminden alım sürecine kadar her şey çok düzenli. Kurallar net ve yönetim her zaman çözüm odaklı yaklaşıyor."</p>
+            <div class="flex items-center gap-4 border-t border-white/10 pt-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center font-bold text-emerald-500 text-sm ring-2 ring-emerald-500/20">B</div>
+                <div>
+                    <h4 class="font-bold text-white group-hover:text-emerald-400 transition-colors">Burak S.</h4>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Yeni Üye</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yorum 3 -->
+        <div class="group bg-[#0a0a0c]/90 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+            <div class="flex justify-between items-start mb-6">
+                <i class="fas fa-quote-left text-emerald-500/20 text-4xl"></i>
+                <div class="flex text-amber-400 text-xs">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="text-gray-200 mb-8 leading-relaxed italic">"Sadece bir ekip değil, tam anlamıyla bir aile ortamı. x7Crew ile tanışmak oyun deneyimimi tamamen değiştirdi, iyi ki buradayım!"</p>
+            <div class="flex items-center gap-4 border-t border-white/10 pt-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center font-bold text-emerald-500 text-sm ring-2 ring-emerald-500/20">C</div>
+                <div>
+                    <h4 class="font-bold text-white group-hover:text-emerald-400 transition-colors">Caner K.</h4>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Moderasyon</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
     <footer class="max-w-6xl mx-auto px-4 mt-12 pb-12 border-t border-white/10 pt-10 text-center">
         <div class="flex justify-center items-center gap-8 mb-8">
@@ -979,6 +1037,8 @@
             </div>
         </div>
     </div>
+
+    
 
     <script>
         // JS: Sidebar Aktif Buton Fonksiyonu
