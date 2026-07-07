@@ -219,8 +219,13 @@
     <div class="hidden md:flex items-center gap-6 bg-white/5 px-6 py-2 rounded-xl border border-white/5">
         <a id="navHome" href="index.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-home mr-1.5"></i> Ana Sayfa</a>
         <a id="navBots" href="bots.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Botlarımız</a>
+        <a href="komutlar.html" class="text-sm font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
+                <i class="fas fa-terminal mr-1.5"></i> Komutlar
+            </a>
         <a href="https://discord.gg/x7Crew" target="_blank" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-life-ring mr-1.5"></i> Destek Hattı</a>
-        <a id="navBots" href="başvuru.html" class="text-sm font-medium text-white/60 hover:text-theme transition-colors"><i class="fas fa-robot mr-1.5"></i> Ekip Başvuru</a>
+       <a href="başvuru.html" class="text-sm font-medium text-white/60 hover:text-emerald-400 transition-colors">
+                <i class="fas fa-user-plus mr-1.5"></i> Ekip Başvuru
+            </a>
     </div>
 
     <div class="flex items-center gap-3">
@@ -351,7 +356,7 @@
 
     const songs = [ 
         { src: 'assets/music4.mp3', title: 'Lvbel C5 & AKDO – DAVAI DAVAI', cover: 'assets/logo.png', lyrics: 'Sözler buraya...' }, 
-        { src: 'assets/music11.mp3', title: 'Keskin & Wegh 55-53', cover: 'assets/logo.png', lyrics: 'Sözler buraya...' } 
+        { src: 'assets/music99.mp3', title: 'Batuflex - Hermes 2.0', cover: 'assets/logo.png', lyrics: 'Sözler buraya...' } 
         
     ];
     let currentSongIndex = 0;
@@ -818,21 +823,54 @@
 </div>
 
 
-<div class="w-full max-w-4xl mx-auto mt-0 mb-16 bg-[#111214] border border-white/10 rounded-2xl p-12 text-center relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent"></div>
+<div class="w-full max-w-4xl mx-auto mt-0 mb-16 bg-[#111214] border border-white/10 rounded-2xl p-8 text-center relative overflow-hidden" id="leaderboard">
+    <h3 class="text-white font-bold text-2xl uppercase tracking-widest mb-6">Aktiflik Tablosu</h3>
     
-    <div class="relative z-10">
-        <div class="w-20 h-20 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center mb-6 ring-1 ring-emerald-500/20">
-            <i class="fas fa-tools text-emerald-500 text-3xl animate-pulse"></i>
-        </div>
-        
-        <h3 class="text-white font-bold text-2xl uppercase tracking-widest mb-2">Bakım Modu</h3>
-        
-        <p class="text-gray-400 text-sm max-w-md mx-auto">
-            x7 Crew aktiflik paneli şu an güncelleniyor veya geliştirme aşamasında. Kısa süre içinde tekrar aktif olacağız, takipte kal!
-        </p>
+    <div id="leaderboard-list" class="space-y-4">
+        <p class="text-gray-400">Veriler yükleniyor...</p>
     </div>
 </div>
+
+<script>
+async function loadLeaderboard() {
+    // VDS'inin Public IP Adresi
+    const API_URL = 'http://78.135.85.221:3001'; 
+
+    try {
+        const response = await fetch(`${API_URL}/api/leaderboard`);
+        
+        // Bağlantı başarılı mı kontrolü
+        if (!response.ok) {
+            throw new Error('API bağlantısı başarısız');
+        }
+
+        const data = await response.json();
+        const container = document.getElementById('leaderboard-list');
+        
+        container.innerHTML = ''; // Yükleniyor yazısını sil
+
+        data.forEach((user, index) => {
+            container.innerHTML += `
+            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
+                <div class="flex items-center gap-4">
+                    <span class="text-emerald-500 font-black text-xl w-8">#${index + 1}</span>
+                    <span class="text-white font-medium">${user.username}</span>
+                </div>
+                <div class="text-emerald-400 font-bold">${user.messageCount} Mesaj</div>
+            </div>
+            `;
+        });
+    } catch (err) {
+        console.error("Leaderboard hatası:", err);
+        document.getElementById('leaderboard-list').innerHTML = 
+            '<p class="text-red-500 text-center">Bot şu an kapalı veya bağlantı reddedildi.</p>';
+    }
+}
+
+// 10 saniyede bir güncelle
+setInterval(loadLeaderboard, 10000);
+loadLeaderboard();
+</script>
 
     <script>
         // Giriş kontrolü ve Veri çekme
