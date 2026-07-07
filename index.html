@@ -823,82 +823,124 @@
 </div>
 
 
-<div class="w-full max-w-4xl mx-auto mt-0 mb-16 bg-[#111214] border border-white/10 rounded-2xl p-8 text-center relative overflow-hidden" id="leaderboard">
-    <h3 class="text-white font-bold text-2xl uppercase tracking-widest mb-6">Aktiflik Tablosu</h3>
+<style>
+    @keyframes customSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .animate-loading {
+        animation: customSpin 0.8s linear infinite;
+    }
+    .leaderboard-row {
+        transition: all 0.2s ease-in-out;
+    }
+    .leaderboard-row:hover {
+        transform: scale(1.01);
+        background-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+    }
+</style>
+
+<div class="w-full max-w-4xl mx-auto mt-0 mb-16 bg-[#111214] border border-white/10 rounded-2xl p-8 relative overflow-hidden shadow-2xl" id="leaderboard">
+    <div class="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
+        <div>
+            <h3 class="text-white font-black text-2xl uppercase tracking-wider">x7Crew Aktiflik Tablosu</h3>
+            <p class="text-xs text-gray-500 mt-1" id="last-updated">Son Güncelleme: Bilgi yok</p>
+        </div>
+        <button onclick="loadLeaderboard()" id="refreshBtn" class="flex items-center justify-center text-gray-400 bg-white/5 p-3 rounded-xl hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-md">
+            <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                <polyline points="21 3 21 8 16 8"></polyline>
+            </svg>
+        </button>
+    </div>
     
-    <div id="leaderboard-list" class="space-y-4">
-        <p class="text-gray-400">Veriler yükleniyor...</p>
+    <div id="leaderboard-list" class="space-y-3">
+        <p class="text-gray-400 text-center py-4">Veriler yükleniyor...</p>
     </div>
 </div>
 
 <script>
 async function loadLeaderboard() {
-    // VDS'inin Public IP Adresi
+    const icon = document.getElementById('refreshIcon');
+    const container = document.getElementById('leaderboard-list');
+    const timeText = document.getElementById('last-updated');
+    
+    // Yükleme başlayınca ikonu döndür
+    icon.classList.add('animate-loading');
+
     const API_URL = 'http://78.135.85.221:3001'; 
 
     try {
         const response = await fetch(`${API_URL}/api/leaderboard`);
-        
-        // Bağlantı başarılı mı kontrolü
-        if (!response.ok) {
-            throw new Error('API bağlantısı başarısız');
-        }
+        if (!response.ok) throw new Error('API bağlantısı başarısız');
 
         const data = await response.json();
-        const container = document.getElementById('leaderboard-list');
-        
-        container.innerHTML = ''; // Yükleniyor yazısını sil
+        container.innerHTML = ''; 
+
+        if(data.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-center py-4">Henüz aktiflik verisi bulunamadı.</p>';
+            return;
+        }
 
         data.forEach((user, index) => {
+            const minutes = Math.floor((user.voiceTime || 0) / 60);
+            
+            // İlk 3 sıra için özel renkler ve madalyalar
+            let rankBadge = `#${index + 1}`;
+            let rankColor = 'text-gray-400';
+            let rowBorder = 'border-white/5';
+
+            if (index === 0) {
+                rankBadge = '👑 #1';
+                rankColor = 'text-amber-400 font-black'; // Altın
+                rowBorder = 'border-amber-500/30';
+            } else if (index === 1) {
+                rankBadge = '🥈 #2';
+                rankColor = 'text-slate-300 font-black'; // Gümüş
+                rowBorder = 'border-slate-400/30';
+            } else if (index === 2) {
+                rankBadge = '🥉 #3';
+                rankColor = 'text-amber-700 font-black'; // Bronz
+                rowBorder = 'border-amber-700/30';
+            }
+
             container.innerHTML += `
-            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
+            <div class="leaderboard-row flex items-center justify-between p-4 bg-white/[0.02] rounded-xl border ${rowBorder} transition-all duration-200">
                 <div class="flex items-center gap-4">
-                    <span class="text-emerald-500 font-black text-xl w-8">#${index + 1}</span>
-                    <span class="text-white font-medium">${user.username}</span>
+                    <span class="${rankColor} text-lg w-14 tracking-wide">${rankBadge}</span>
+                    <span class="text-white font-semibold text-base">${user.username}</span>
                 </div>
-                <div class="text-emerald-400 font-bold">${user.messageCount} Mesaj</div>
+                <div class="flex items-center gap-6 text-sm">
+                    <div class="bg-blue-500/10 text-blue-400 font-bold px-3 py-1.5 rounded-lg border border-blue-500/20">
+                        📊 ${user.messageCount} Mesaj
+                    </div>
+                    <div class="bg-emerald-500/10 text-emerald-400 font-bold px-3 py-1.5 rounded-lg border border-emerald-500/20">
+                        🎙️ ${minutes} dk Ses
+                    </div>
+                </div>
             </div>
             `;
         });
+
+        // Saati güncelle
+        const now = new Date();
+        timeText.innerText = `Son Güncelleme: ${now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
+
     } catch (err) {
         console.error("Leaderboard hatası:", err);
-        document.getElementById('leaderboard-list').innerHTML = 
-            '<p class="text-red-500 text-center">Bot şu an kapalı veya bağlantı reddedildi.</p>';
+        container.innerHTML = '<p class="text-red-500 text-center py-4">Bot şu an kapalı veya bağlantı reddedildi.</p>';
+    } finally {
+        // İşlem bitince (başarılı veya başarısız) dönmeyi durdur
+        setTimeout(() => {
+            icon.classList.remove('animate-loading');
+        }, 400); // Göz yormasın diye çok hafif bir durma payı
     }
 }
 
-// 10 saniyede bir güncelle
-setInterval(loadLeaderboard, 10000);
+// Sayfa ilk açıldığında çalıştır
 loadLeaderboard();
 </script>
-
-    <script>
-        // Giriş kontrolü ve Veri çekme
-        fetch('/api/user-status')
-            .then(res => res.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    document.getElementById('login-area').style.display = 'none';
-                    document.getElementById('dashboard-area').style.display = 'block';
-                    document.getElementById('username').innerText = data.username;
-
-                    // Tabloyu doldur
-                    const tbody = document.getElementById('aktiflik-tbody');
-                    data.stats.forEach(u => {
-                        tbody.innerHTML += `
-                            <tr class="border-b border-white/5">
-                                <td class="p-4">${u.uye}</td>
-                                <td class="p-4 text-center">${u.ses}</td>
-                                <td class="p-4 text-center">${u.mesaj}</td>
-                                <td class="p-4 text-right">${u.durum}</td>
-                            </tr>
-                        `;
-                    });
-                }
-            });
-    </script>
-</body>
-</html>
     
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl mx-auto px-4 mb-16">
 
