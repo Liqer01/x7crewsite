@@ -824,122 +824,199 @@
 
 
 <style>
-    @keyframes customSpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    .glass-panel {
+        background: rgba(17, 19, 24, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
     }
-    .animate-loading {
-        animation: customSpin 0.8s linear infinite;
+    .row-hover { transition: all 0.2s ease-in-out; }
+    .row-hover:hover {
+        background: rgba(255, 255, 255, 0.06);
+        transform: scale(1.005);
+        border-color: rgba(255, 255, 255, 0.15);
     }
-    .leaderboard-row {
-        transition: all 0.2s ease-in-out;
-    }
-    .leaderboard-row:hover {
-        transform: scale(1.01);
-        background-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
-    }
+    .spin-fast { animation: spin 0.6s linear infinite; }
+    
+    /* Isı Haritası Renkleri */
+    .heat-0 { background: rgba(255,255,255,0.05); }
+    .heat-1 { background: rgba(16, 185, 129, 0.2); }
+    .heat-2 { background: rgba(16, 185, 129, 0.4); }
+    .heat-3 { background: rgba(16, 185, 129, 0.7); }
+    .heat-4 { background: rgba(16, 185, 129, 1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
 </style>
 
-<div class="w-full max-w-4xl mx-auto mt-0 mb-16 bg-[#111214] border border-white/10 rounded-2xl p-8 relative overflow-hidden shadow-2xl" id="leaderboard">
-    <div class="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
-        <div>
-            <h3 class="text-white font-black text-2xl uppercase tracking-wider">x7Crew Aktiflik Tablosu</h3>
-            <p class="text-xs text-gray-500 mt-1" id="last-updated">Son Güncelleme: Bilgi yok</p>
-        </div>
-        <button onclick="loadLeaderboard()" id="refreshBtn" class="flex items-center justify-center text-gray-400 bg-white/5 p-3 rounded-xl hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-md">
-            <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
-                <polyline points="21 3 21 8 16 8"></polyline>
-            </svg>
-        </button>
-    </div>
+<div class="w-full max-w-5xl mx-auto my-12 glass-panel rounded-[2rem] p-6 md:p-10" id="leaderboard">
     
-    <div id="leaderboard-list" class="space-y-3">
-        <p class="text-gray-400 text-center py-4">Veriler yükleniyor...</p>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-5 border-b border-white/5 pb-6">
+        <div>
+            <div class="flex items-center gap-3 mb-1">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">x7 CREW Gelişmiş Aktiflik Paneli</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <p class="text-sm text-gray-400 font-medium ml-5" id="last-updated">Son Güncelleme: Veriler senkronize ediliyor...</p>
+                <span id="page-info" class="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">Sayfa 1</span>
+            </div>
+        </div>
+        
+        <div class="flex gap-2">
+            <button onclick="changePage(-1)" id="prevBtn" class="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all disabled:opacity-20">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button onclick="changePage(1)" id="nextBtn" class="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all disabled:opacity-20">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button onclick="loadLeaderboard()" class="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all">
+                <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><polyline points="21 3 21 8 16 8"></polyline></svg>
+            </button>
+        </div>
     </div>
+
+    <div class="mb-10">
+        <div class="flex justify-between text-[10px] text-gray-500 uppercase font-bold mb-2 px-1">
+            <span>00:00</span><span>x7 CREW Günlük Yoğunluk</span><span>23:59</span>
+        </div>
+        <div id="heatmap-container" class="flex gap-1 h-12 w-full">
+            </div>
+    </div>
+
+    <div class="hidden md:flex items-center justify-between px-6 pb-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <div class="flex items-center gap-6 w-1/3"><span class="w-12 text-center">Sıra</span><span>Kullanıcı & Seviye</span></div>
+        <div class="flex items-center justify-end gap-6 w-2/3"><span class="w-28 text-right">Son Durum</span><span class="w-28 text-right">En Aktif</span><span class="w-28 text-right">Mesaj</span><span class="w-28 text-right">Ses Süresi</span></div>
+    </div>
+
+    <div id="leaderboard-list" class="space-y-3 min-h-[300px]"></div>
 </div>
 
 <script>
+let allData = [];
+let currentPage = 1;
+const itemsPerPage = 5;
+
+// Isı Haritası Render Fonksiyonu
+function renderHeatmap(data) {
+    const container = document.getElementById('heatmap-container');
+    container.innerHTML = '';
+    // Backend'den gelecek 24 adet değer (örneğin 0 ile 100 arası aktivite oranı)
+    data.forEach(val => {
+        let heatClass = 'heat-0';
+        if (val > 60) heatClass = 'heat-4';
+        else if (val > 40) heatClass = 'heat-3';
+        else if (val > 20) heatClass = 'heat-2';
+        else if (val > 5) heatClass = 'heat-1';
+        
+        container.innerHTML += `<div class="flex-1 rounded-sm ${heatClass} transition-all duration-500" title="Aktivite: ${val}"></div>`;
+    });
+}
+
+function formatLastActive(timestamp, actionType) {
+    if (!timestamp) return "Veri Yok";
+    if (actionType === 'voice_connected') return `<span class="text-emerald-400 flex items-center gap-1">🟢 Seste</span>`;
+    const now = Date.now();
+    const diffInSeconds = Math.floor((now - timestamp) / 1000);
+    const suffix = actionType === 'text' ? 'yazdı' : 'sesteydi';
+    if (diffInSeconds < 60) return `${diffInSeconds < 0 ? 0 : diffInSeconds} sn önce ${suffix}`;
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} dk önce ${suffix}`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} sa önce ${suffix}`;
+    return `${Math.floor(diffInHours / 24)} gün önce`;
+}
+
+function renderTable() {
+    const container = document.getElementById('leaderboard-list');
+    const pageInfo = document.getElementById('page-info');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    const start = (currentPage - 1) * itemsPerPage;
+    const pageData = allData.slice(start, start + itemsPerPage);
+    
+    container.innerHTML = '';
+    
+    pageData.forEach((user, index) => {
+        const actualIndex = start + index;
+        const minutes = Math.floor((user.voiceTime || 0) / 60);
+        const level = user.level || 1;
+        const xpProgress = user.xpProgress || 0;
+        const rankBadge = actualIndex + 1;
+        
+        let rowStyle = 'bg-white/[0.02] border border-white/[0.05]';
+        let rankClass = 'text-gray-400';
+        if (actualIndex === 0) { rowStyle = 'bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20'; rankClass = 'text-amber-400 font-bold'; }
+        else if (actualIndex === 1) { rowStyle = 'bg-gradient-to-r from-slate-300/10 to-transparent border border-slate-300/20'; rankClass = 'text-slate-300 font-bold'; }
+        else if (actualIndex === 2) { rowStyle = 'bg-gradient-to-r from-orange-400/10 to-transparent border border-orange-400/20'; rankClass = 'text-orange-400 font-bold'; }
+
+        container.innerHTML += `
+            <div class="row-hover flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl ${rowStyle} gap-4 md:gap-0 text-sm">
+                <div class="flex items-center gap-4 md:w-1/3">
+                    <div class="w-12 text-center ${rankClass} text-lg font-black">${rankBadge}</div>
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center font-bold uppercase text-gray-400 border border-white/5">${user.username.substring(0, 2)}</div>
+                    <div>
+                        <div class="text-white font-medium">${user.username}</div>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-[10px] bg-white/5 border border-white/10 text-gray-400 px-1.5 py-0.5 rounded font-mono">Lvl ${level}</span>
+                            <div class="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400" style="width: ${xpProgress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between md:justify-end gap-6 md:w-2/3 text-xs text-gray-300">
+                    <span class="live-timer" data-timestamp="${user.lastActiveTime}" data-action="${user.lastActionType}">${formatLastActive(user.lastActiveTime, user.lastActionType)}</span>
+                    <span class="w-20 text-right bg-white/5 px-2 py-1 rounded text-gray-400 font-mono">#${user.favChannel || "genel"}</span>
+                    <span class="w-16 text-right text-blue-400 font-bold">${user.messageCount}</span>
+                    <span class="w-16 text-right text-emerald-400 font-bold">${minutes} dk</span>
+                </div>
+            </div>
+        `;
+    });
+
+    pageInfo.innerText = `Sayfa ${currentPage}`;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = (start + itemsPerPage) >= allData.length;
+}
+
+function changePage(dir) {
+    currentPage += dir;
+    renderTable();
+}
+
 async function loadLeaderboard() {
     const icon = document.getElementById('refreshIcon');
     const container = document.getElementById('leaderboard-list');
-    const timeText = document.getElementById('last-updated');
+    icon.classList.add('spin-fast');
     
-    // Yükleme başlayınca ikonu döndür
-    icon.classList.add('animate-loading');
-
-  const API_URL = "https://api.closydev.site";
-
     try {
-        const response = await fetch(`${API_URL}/api/leaderboard`);
-        if (!response.ok) throw new Error('API bağlantısı başarısız');
+        const response = await fetch("https://api.closydev.site/api/leaderboard");
+        allData = await response.json();
+        
+        // ÖRNEK: Heatmap verisi (Bunu backend'inden dinamik çekebilirsin)
+        const mockHeatmap = Array.from({length: 24}, () => Math.floor(Math.random() * 80));
+        renderHeatmap(mockHeatmap);
 
-        const data = await response.json();
-        container.innerHTML = ''; 
-
-        if(data.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 text-center py-4">Henüz aktiflik verisi bulunamadı.</p>';
-            return;
-        }
-
-        data.forEach((user, index) => {
-            const minutes = Math.floor((user.voiceTime || 0) / 60);
-            
-            // İlk 3 sıra için özel renkler ve madalyalar
-            let rankBadge = `#${index + 1}`;
-            let rankColor = 'text-gray-400';
-            let rowBorder = 'border-white/5';
-
-            if (index === 0) {
-                rankBadge = '👑 #1';
-                rankColor = 'text-amber-400 font-black'; // Altın
-                rowBorder = 'border-amber-500/30';
-            } else if (index === 1) {
-                rankBadge = '🥈 #2';
-                rankColor = 'text-slate-300 font-black'; // Gümüş
-                rowBorder = 'border-slate-400/30';
-            } else if (index === 2) {
-                rankBadge = '🥉 #3';
-                rankColor = 'text-amber-700 font-black'; // Bronz
-                rowBorder = 'border-amber-700/30';
-            }
-
-            container.innerHTML += `
-            <div class="leaderboard-row flex items-center justify-between p-4 bg-white/[0.02] rounded-xl border ${rowBorder} transition-all duration-200">
-                <div class="flex items-center gap-4">
-                    <span class="${rankColor} text-lg w-14 tracking-wide">${rankBadge}</span>
-                    <span class="text-white font-semibold text-base">${user.username}</span>
-                </div>
-                <div class="flex items-center gap-6 text-sm">
-                    <div class="bg-blue-500/10 text-blue-400 font-bold px-3 py-1.5 rounded-lg border border-blue-500/20">
-                        📊 ${user.messageCount} Mesaj
-                    </div>
-                    <div class="bg-emerald-500/10 text-emerald-400 font-bold px-3 py-1.5 rounded-lg border border-emerald-500/20">
-                        🎙️ ${minutes} dk Ses
-                    </div>
-                </div>
-            </div>
-            `;
-        });
-
-        // Saati güncelle
-        const now = new Date();
-        timeText.innerText = `Son Güncelleme: ${now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
-
+        currentPage = 1;
+        renderTable();
+        document.getElementById('last-updated').innerText = `Son Güncelleme: ${new Date().toLocaleTimeString('tr-TR')}`;
     } catch (err) {
-        console.error("Leaderboard hatası:", err);
-        container.innerHTML = '<p class="text-red-500 text-center py-4">Bot şu an kapalı veya bağlantı reddedildi.</p>';
+        container.innerHTML = `<div class="text-center py-10 text-red-400">Veriler alınamadı.</div>`;
     } finally {
-        // İşlem bitince (başarılı veya başarısız) dönmeyi durdur
-        setTimeout(() => {
-            icon.classList.remove('animate-loading');
-        }, 400); // Göz yormasın diye çok hafif bir durma payı
+        setTimeout(() => icon.classList.remove('spin-fast'), 500);
     }
 }
 
-// Sayfa ilk açıldığında çalıştır
-loadLeaderboard();
+setInterval(() => {
+    document.querySelectorAll('.live-timer').forEach(el => {
+        el.innerHTML = formatLastActive(el.dataset.timestamp, el.dataset.action);
+    });
+}, 1000);
+
+document.addEventListener("DOMContentLoaded", loadLeaderboard);
 </script>
     
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl mx-auto px-4 mb-16">
