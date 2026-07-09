@@ -91,7 +91,6 @@
 <div id="sidebarContainer" class="fixed top-[30%] left-0 z-[999] flex items-center -translate-x-[160px]">
     <div class="left-bots-sidebar" data-tilt data-tilt-max="5" data-tilt-speed="400">
         
-        <!-- Online Sayaç -->
         <div class="online-indicator mb-2">
             <div class="pulse-dot"></div>
             <span class="text-[9px] text-white/60"><span id="onlineCount">32</span> Aktif Kullanıcı</span>
@@ -234,7 +233,7 @@
              <span id="navCoinCount" class="text-sm font-bold text-white">0 FC</span>
         </div>
 
-        <a href="/auth/discord" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)]">
+        <a href="http://127.0.0.1:3000/login" id="loginBtn" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)] flex-shrink-0 whitespace-nowrap">
             <i class="fab fa-discord mr-2"></i> Giriş
         </a>
     </div>
@@ -560,28 +559,41 @@
         
    <div id="teamGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
     
-    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="h-[280px] w-full [perspective:1000px] group">
+    <div data-tilt data-tilt-max="10" data-tilt-speed="400" class="group relative h-[280px] w-full [perspective:1000px]">
     
+    <div class="absolute -inset-0.5 bg-gradient-to-tr from-emerald-500 to-blue-600 rounded-2xl opacity-20 group-hover:opacity-60 blur-lg transition-all duration-500"></div>
+
     <div class="relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         
-        <div class="absolute inset-0 bg-[#111214] border border-white/10 rounded-xl overflow-hidden [backface-visibility:hidden]">
-            <div class="h-20 w-full bg-gray-800 bg-center bg-cover" style="background-image: url('assets/banner1.jpg');"></div>
-            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#111214] -mt-10 overflow-hidden bg-black">
+        <div class="absolute inset-0 bg-[#060606] border border-white/10 rounded-2xl overflow-hidden [backface-visibility:hidden] shadow-2xl">
+            <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
+            
+            <div class="h-24 w-full bg-gradient-to-b from-neutral-800 to-transparent"></div>
+            
+            <div class="w-20 h-20 mx-auto rounded-full border-4 border-[#060606] -mt-10 overflow-hidden bg-black shadow-lg">
                 <img src="assets/avatar.png" class="w-full h-full object-cover">
             </div>
-            <div class="mt-2 flex-grow flex flex-col items-center">
-                <h3 class="font-bold text-white text-md">ClosyDEV</h3>
-                <div class="mt-2 px-3 py-1 bg-[#2b2d31] rounded-full border border-white/5 text-[10px] text-gray-200 uppercase tracking-wider">Developer</div>
+            
+            <div class="mt-4 flex flex-col items-center">
+                <h3 class="font-bold text-white text-lg tracking-tight">ClosyDEV</h3>
+                <div class="mt-1 flex gap-2">
+                    <span class="px-3 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-md text-[10px] text-emerald-400 font-mono">DEVELOPER</span>
+                    <span class="px-3 py-0.5 bg-white/5 border border-white/10 rounded-md text-[10px] text-gray-400 font-mono">2026</span>
+                </div>
             </div>
         </div>
 
-        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden border border-white/10">
-            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('assets/arkaplankart.jpg');"></div>
-            <div class="absolute inset-0 bg-[#111214]/90 backdrop-blur-[2px]"></div>
-            <div class="relative z-10 w-full h-full p-4 flex flex-col items-center justify-center text-center">
-                <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-                <p class="text-gray-300 text-xs px-2 leading-relaxed">Sunucu geliştirme ve script optimizasyonu üzerine çalışıyorum.</p>
-                <a href="https://discord.com/users/1225205894128603198" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-md transition-all font-bold">PROFİLE GİT</a>
+        <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl overflow-hidden border border-white/10 bg-[#060606]">
+             <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/20 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10 w-full h-full p-6 flex flex-col items-center justify-center text-center">
+                <h4 class="text-white font-bold mb-2 tracking-widest text-xs uppercase">HAKKIMDA</h4>
+                <p class="text-gray-400 text-xs px-2 leading-relaxed mb-6">"Optimizasyon ve modern arayüz tasarımı üzerine uzmanlaşmış sunucu geliştiricisi."</p>
+                
+                <a href="https://discord.com/users/1225205894128603198" target="_blank" 
+                   class="group relative inline-flex items-center justify-center px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-[10px] uppercase tracking-widest transition-all">
+                    <span>Profili Görüntüle</span>
+                </a>
             </div>
         </div>
         
@@ -764,7 +776,7 @@
 
         <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#111214] border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center">
             <h4 class="text-emerald-500 font-bold mb-2">Hakkımda</h4>
-             <p class="text-gray-400 text-xs">Kadın Avcısı.</p>
+             <p class="text-gray-400 text-xs">Kadın Avcısı. Sapık</p>
             <a href="https://discord.com/users/731203616211206176" target="_blank" class="mt-4 text-[10px] bg-emerald-600 hover:bg-emerald-500 transition-all text-white px-3 py-1 rounded-md">PROFİLE GİT</a>
         </div>
         
